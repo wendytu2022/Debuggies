@@ -3,8 +3,6 @@ package geometry;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import geometry.Vector;
-
 // Represents a generic convex polygon for collisions
 public class Polygon {
 	// List of vertices for the polygon. MUST form a convex polygon

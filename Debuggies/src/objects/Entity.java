@@ -6,7 +6,9 @@ public class Entity extends GameObject {
 	protected Team team;
 	protected int health;
 	
-	
-	
+	public Entity(Team team, int health) {
+		this.team = team;
+		this.health = health;
+	}
 	
 }

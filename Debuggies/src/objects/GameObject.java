@@ -1,5 +1,6 @@
 package objects;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import geometry.Polygon;
@@ -50,9 +51,21 @@ public class GameObject {
 		return acceleration;
 	}
 	
-	// Updates the GameObject
-	public void update() {
-		
+	// Checks for collision with another gameobject
+	public boolean collidesWith(GameObject o) {
+		if (collisionBox == null || o.collisionBox == null)
+			return false;
+		else
+			return collisionBox.collidesWith(o.collisionBox);
 	}
+	
+	// Renders the GameObject
+	public void render(Graphics g) {}
+	
+	// Updates the GameObject
+	public void update() { }
+	
+	// Collision Callback
+	public void onCollide(GameObject o) {}
 	
 }
