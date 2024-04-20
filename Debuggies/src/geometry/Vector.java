@@ -1,4 +1,4 @@
-package physics;
+package geometry;
 
 public class Vector {
 	public float x;

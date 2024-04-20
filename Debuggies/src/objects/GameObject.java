@@ -2,8 +2,8 @@ package objects;
 
 import org.newdawn.slick.Image;
 
-import physics.Polygon;
-import physics.Vector;
+import geometry.Polygon;
+import geometry.Vector;
 
 // Represents a generic gameobject
 public class GameObject {
@@ -25,6 +25,11 @@ public class GameObject {
 		
 		sprite = null;
 		collisionBox = null;
+	}
+	
+	// Updates the GameObject
+	public void update() {
+		
 	}
 	
 }
