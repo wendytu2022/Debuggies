@@ -224,9 +224,9 @@ public class ExampleState extends BasicGameState {
 			}
 		}
 		
-		if (!aiming && key == Input.KEY_ESCAPE) {
-			System.exit(0);
-		}
+//		if (!aiming && key == Input.KEY_ESCAPE) {
+//			System.exit(0);
+//		}
 		
 	}
 
@@ -464,6 +464,10 @@ public class ExampleState extends BasicGameState {
 				o.update(1 / 60.f);
 			}
 				
+		}
+		if (!aiming && user_input.isKeyPressed(Input.KEY_ESCAPE)) {
+			 sbg.getState(0).init(gc, sbg);
+	         sbg.enterState(1);
 		}
 		
 	}

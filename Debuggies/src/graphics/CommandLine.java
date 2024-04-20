@@ -142,16 +142,6 @@ public class CommandLine extends Box{
 		
 	}
 	
-//	public void update(int key) {
-//        if (user_input.isKeyPressed(Input.KEY_ENTER)) {
-//            // Clear the text field
-////            line.setText("");
-//        }	
-//	}
-
-//	@Override
-//	protected void keyPress(int key) {		
-//	}
 
 	
 		
