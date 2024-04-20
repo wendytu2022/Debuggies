@@ -16,6 +16,11 @@ public class PhysicsManager {
 		objects.add(o);
 	}
 	
+	// Unsubscribes object from the physics engine
+	public static void RemoveObject(GameObject o) {
+		objects.remove(o);
+	}
+	
 	// Updates physics once for all objects
 	public static void UpdatePhysics(float deltaTime) {
 		// Update object positions and velocities

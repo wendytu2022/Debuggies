@@ -1,7 +1,12 @@
 package core;
 
 public class Config {
-	public static final int PIXELS_PER_UNIT = 5;
+	// Screen Width and Height
+	public static final int SCREEN_WIDTH = Main.getScreenWidth();
+	public static final int SCREEN_HEIGHT = Main.getScreenHeight();
+	
+	// Pixels Per Unit
+	public static float PIXELS_PER_UNIT = 5f;
 	
 	// Friction
 	public static final float FRICTION = 0.85f;
