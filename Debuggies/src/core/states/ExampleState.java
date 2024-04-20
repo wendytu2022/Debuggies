@@ -25,6 +25,7 @@ import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
 import objects.IndexOutOfBoundsEnemy;
+import objects.NullPointerEnemy;
 import objects.StackOverflowEnemy;
 import objects.SyntaxErrorEnemy;
 import objects.UninitializedVariableEnemy;
@@ -120,7 +121,7 @@ public class ExampleState extends BasicGameState {
 		// Create Enemies
 		final float radius = 100f;
 		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new StackOverflowEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -130,7 +131,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));
 		}
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new SyntaxErrorEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -162,6 +163,16 @@ public class ExampleState extends BasicGameState {
 		
 		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new ConcurrentModificationEnemy();
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));	
+		}
+		
+		for (int i = 0; i < 2; i++) {
+			sampleEnemy = new NullPointerEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
 			sampleEnemy.getPosition().assign(
