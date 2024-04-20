@@ -6,8 +6,8 @@ public class Config {
 	public static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	
 	// Pixels Per Unit
-	public static float PIXELS_PER_UNIT = 5f;
+	public static float PIXELS_PER_UNIT = 10f;
 	
 	// Friction
-	public static final float FRICTION = 0.85f;
+	public static final float FRICTION = 0.65f;
 }

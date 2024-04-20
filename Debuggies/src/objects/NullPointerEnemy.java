@@ -19,5 +19,6 @@ public class NullPointerEnemy extends Enemy {
 			// attack directly at player all the time
 			Spike bullet = new Spike(this, position.lookAt(ExampleState.player.getPosition()));
 		}
+		// attack at one point of the screen
 	}
 }

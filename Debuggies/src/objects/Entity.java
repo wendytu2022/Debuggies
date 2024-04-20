@@ -7,6 +7,8 @@ public class Entity extends GameObject {
 	protected int health;
 	
 	public Entity(Team team, int health) {
+		this.ignoreFriction = false;
+		
 		this.team = team;
 		this.health = health;
 	}
@@ -19,7 +21,7 @@ public class Entity extends GameObject {
 	@Override
 	public void update(float deltaTime) {
 		// Calls superclass update method
-		super.update(deltaTime);		
+		super.update(deltaTime);	
 	}
 	
 	// Take entity damage

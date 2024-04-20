@@ -41,7 +41,11 @@ public class CommandLine extends Box{
 	
 	public void initialize() {
 		line = new TextField(gc, font, 400, 400, 1000, 100);
-		line.setFocus(true);
+		line.setFocus(false);
+	}
+	
+	public void setFocus(boolean b) {
+		line.setFocus(b);
 	}
 	
 //	Directly draw the image to the game, top left corner

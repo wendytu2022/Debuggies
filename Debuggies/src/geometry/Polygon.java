@@ -5,6 +5,8 @@ import org.newdawn.slick.Graphics;
 
 import graphics.GraphicsManager;
 
+import geometry.Projection;
+
 // Represents a generic convex polygon for collisions
 public class Polygon {
 	// List of vertices for the polygon. MUST form a convex polygon
@@ -12,28 +14,6 @@ public class Polygon {
 	
 	// What the polygon is centered around
 	private Vector center;
-	
-	// Projection Inner Class
-	// Internally used to handle collisions
-	private class Projection {
-		private float lower;
-		private float upper;
-		
-		// Constructor
-		public Projection(float l, float u) {
-			lower = l;
-			upper = u;
-		}
-		
-		// Determines if this projections overlaps another
-		public boolean overlaps(Projection p) {
-			if (upper < p.lower || p.upper < lower) 
-				return false;
-			else 
-				return true;
-		}
-		
-	}
 	
 	// Constructors	
 	public Polygon(int number) {
@@ -159,7 +139,7 @@ public class Polygon {
 		return true;
 	}
 	
-	private Projection projectOntoEdge(Vector edge, Vector offset) {
+	public Projection projectOntoEdge(Vector edge, Vector offset) {
 		// Project all vertices of the polygon onto the edge 
 		float init = Vector.dotProduct(edge, vertices[0].offset(offset.x, offset.y));
 		Projection projection = new Projection(init, init);

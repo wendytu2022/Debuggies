@@ -29,6 +29,6 @@ public class StackOverflowEnemy extends Enemy {
 			Spike bullet = new Spike(this, new Vector(randX, randY));
 		}
 		
-		
+		// shoot a booty ton of bullets
 	}
 }

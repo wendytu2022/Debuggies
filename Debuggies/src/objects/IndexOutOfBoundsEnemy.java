@@ -31,5 +31,6 @@ public class IndexOutOfBoundsEnemy extends Enemy {
 			// attack
 			Spike bullet = new Spike(this, new Vector(randX2, randY2));
 		}
+		// teleport, attack, teleport, attack
 	}
 }
