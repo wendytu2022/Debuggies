@@ -31,15 +31,12 @@ public class PhysicsManager {
 			Vector acceleration = o.getAcceleration();
 			
 			// Dampen velocity
-			velocity.scaleInplace(Config.FRICTION);
+			if (!o.isFrictionless())
+				velocity.scaleInplace(Config.FRICTION);
 			
 			// Update velocity and position
 			velocity.offsetInplace(acceleration.scale(deltaTime));
 			position.offsetInplace(velocity.scale(deltaTime));
-			
-			// Reset acceleration
-			acceleration.x = 0;
-			acceleration.y = 0;
 		}
 		
 		// Check for collision, and call callback function on collision

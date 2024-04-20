@@ -25,7 +25,11 @@ import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
+import objects.Entity;
+import objects.Entity.Team;
 import objects.physics.PhysicsManager;
+import objects.projectiles.Spike;
+
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.UnicodeFont;
 
@@ -34,10 +38,11 @@ public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
 	// Player Object
-	private GameObject player;
+	public static GameObject player;
 	
 	// Game Entities
-	private ArrayList<GameObject> objects;
+	private Entity sampleEnemy;
+	public static ArrayList<GameObject> objects;
 	
 	// 
 	private float offsetSize = 2.5f;
@@ -71,19 +76,16 @@ public class ExampleState extends BasicGameState {
 		
 		objects = new ArrayList<>();
 		
-		player = new GameObject();
+		player = new Entity(Team.Ally, 100);
 		player.getPosition().x = -1.5f;
-		
-		objects.add(player);
 		
 		GameObject o1 = new GameObject();
 		GameObject o2 = new GameObject();
 		
+		sampleEnemy = new Entity(Team.Enemy, 100);
+		
 		o1.getPosition().x = (float) (500 * Math.random()) - 5f;
 		o2.getPosition().x = (float) (500 * Math.random()) - 15f;
-		
-		objects.add(o1);
-		objects.add(o2);
 		
 		// Set Camera onto Player
 		GraphicsManager.center = player.getPosition();
@@ -161,7 +163,12 @@ public class ExampleState extends BasicGameState {
 	// Runs when the mouse is pressed
 	@Override
 	public void mousePressed(int key, int x, int y) { 
+		 float xSpawn = (float) (Math.random() * 10.f);
+		 float ySpawn = (float) (Math.random() * 10.f);
 		 
+		 Vector spawn = new Vector(xSpawn, ySpawn);
+		 
+		 Spike s = new Spike(sampleEnemy, spawn.lookAt(player.getPosition()));
 	}
 	
 	// Called one every frame for rendering
@@ -193,11 +200,13 @@ public class ExampleState extends BasicGameState {
 		Input input = gc.getInput();
 		GraphicsManager.center = player.getPosition();
 		
+		player.rotateInplace(0.05f);
+		
 		// Input Handling
 		if (input.isKeyDown(Input.KEY_Q))
-			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT + 1;
+			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT + 0.05f;
 		if (input.isKeyDown(Input.KEY_E))
-			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT - 1;
+			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT - 0.05f;
 		
 		if (input.isKeyDown(Input.KEY_DOWN)) {				 
 			addOffset(0, -offsetSize);
@@ -221,7 +230,7 @@ public class ExampleState extends BasicGameState {
 		
 		// Update all gameobjects
 		for (GameObject o : objects) {
-			o.update();
+			o.update(1 / 60.f);
 		}
 	}
 	
