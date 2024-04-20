@@ -25,6 +25,7 @@ import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
+import objects.StackOverflowEnemy;
 import objects.Entity;
 import objects.Entity.Team;
 import objects.physics.PhysicsManager;
@@ -42,6 +43,7 @@ public class ExampleState extends BasicGameState {
 	
 	// Game Entities
 	private Entity sampleEnemy;
+	private StackOverflowEnemy sampleStackOverflowEnemy;
 	public static ArrayList<GameObject> objects;
 	
 	// 
@@ -83,6 +85,7 @@ public class ExampleState extends BasicGameState {
 		GameObject o2 = new GameObject();
 		
 		sampleEnemy = new Entity(Team.Enemy, 100);
+		sampleStackOverflowEnemy = new StackOverflowEnemy(Team.Enemy, 100, EnemyErrorType.StackOverflow);
 		
 		o1.getPosition().x = (float) (500 * Math.random()) - 5f;
 		o2.getPosition().x = (float) (500 * Math.random()) - 15f;
