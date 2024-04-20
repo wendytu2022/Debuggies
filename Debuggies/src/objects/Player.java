@@ -72,4 +72,6 @@ public class Player extends Entity {
 				
 		super.render(g);
 	}
+	
+	
 }

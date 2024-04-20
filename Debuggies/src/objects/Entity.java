@@ -4,7 +4,7 @@ public class Entity extends GameObject {
     public enum Team { Ally, Neutral, Enemy };
     
     protected Team team;
-    protected int health;
+    public int health;
     
     public Entity(Team team, int health) {
     	super();
