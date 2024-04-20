@@ -16,6 +16,7 @@ import geometry.Vector;
 import graphics.EndButton;
 import graphics.Exit;
 import graphics.GraphicsManager;
+import graphics.ImageManager;
 import graphics.StartButton;
 import objects.projectiles.Spike;
 
@@ -61,7 +62,8 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.setBackground(new Color(0.14f, 0.14f, 0.15f)); // background VSCode color
-		
+		Image logo = ImageManager.getImage("logo.png");
+		g.drawImage(logo.getScaledCopy((int)(Config.SCREEN_WIDTH), (int)(Config.SCREEN_HEIGHT)), 0, 0);
 		start.draw(g);
 		end.draw(g);
 	}
