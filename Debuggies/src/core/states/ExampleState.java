@@ -25,6 +25,7 @@ import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
+import objects.StackOverflowEnemy;
 import objects.Player;
 import objects.Entity;
 import objects.Entity.Team;
@@ -46,6 +47,7 @@ public class ExampleState extends BasicGameState {
 		
 	// Game Entities
 	private Entity sampleEnemy;
+	private StackOverflowEnemy sampleStackOverflowEnemy;
 	public static ArrayList<GameObject> objects;
 	
 	// Aim State
@@ -96,6 +98,9 @@ public class ExampleState extends BasicGameState {
 		// Create Player
 		player = new Player();
 		
+		sampleEnemy = new Entity(Team.Enemy, 100);
+		sampleStackOverflowEnemy = new StackOverflowEnemy(Team.Enemy, 100, EnemyErrorType.StackOverflow);
+    
 		// Create Enemies
 		for (int i = 0; i < 5; i++) {
 			sampleEnemy = new Entity(Team.Enemy, 100);

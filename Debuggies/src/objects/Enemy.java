@@ -16,4 +16,10 @@ public class Enemy extends Entity{
 		this.enemyErrorType = enemyErrorType;
 	}
 	
+	@Override
+	public void update(float deltaTime) {
+		this.update(deltaTime);
+		
+	}
+	
 }
