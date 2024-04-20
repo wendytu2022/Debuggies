@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="SlickTemplate/libs/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/ibxm.jar"/>
+	<classpathentry kind="lib" path="libs/jinput.jar"/>
+	<classpathentry kind="lib" path="libs/jnlp.jar"/>
+	<classpathentry kind="lib" path="libs/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="libs/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl.jar"/>
+	<classpathentry kind="lib" path="libs/natives-linux.jar"/>
+	<classpathentry kind="lib" path="libs/natives-mac.jar"/>
+	<classpathentry kind="lib" path="libs/natives-windows.jar"/>
+	<classpathentry kind="lib" path="libs/slick.jar"/>
+	<classpathentry kind="lib" path="libs/slick-examples.jar"/>
+	<classpathentry kind="lib" path="libs/tinylinepp.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
