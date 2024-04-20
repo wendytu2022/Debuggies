@@ -98,9 +98,6 @@ public class ExampleState extends BasicGameState {
 		// Create Player
 		player = new Player();
 		
-		sampleEnemy = new Entity(Team.Enemy, 100);
-		sampleStackOverflowEnemy = new StackOverflowEnemy(Team.Enemy, 100, EnemyErrorType.StackOverflow);
-    
 		// Create Enemies
 		for (int i = 0; i < 5; i++) {
 			sampleEnemy = new Entity(Team.Enemy, 100);
