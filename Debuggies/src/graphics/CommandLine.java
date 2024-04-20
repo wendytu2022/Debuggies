@@ -44,10 +44,9 @@ public class CommandLine extends Box{
 	}
 	
 	public void initialize() {
-<<<<<<< Updated upstream
 		line = new TextField(gc, font, 400, 400, 1000, 100);
 		line.setFocus(true);
-=======
+
 		/* Initialize the Error Prompt */
 		problem_line = new TextField(gc, font,((int) (0.70f * Config.SCREEN_WIDTH)),
 				((int) (0.75f * Config.SCREEN_HEIGHT)),
@@ -69,7 +68,6 @@ public class CommandLine extends Box{
 	
 	public void setFocus(boolean b) {
 		problem_line.setFocus(b);
->>>>>>> Stashed changes
 	}
 		
 	

@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import core.Config;
+import core.states.ExampleState;
 import geometry.Polygon;
 import geometry.Vector;
 import graphics.GraphicsManager;
@@ -26,25 +27,38 @@ public class GameObject {
 	
 	// For Rendering
 	protected Image sprite;
+	
+	protected float rotation;
+	
 	protected float width;
 	protected float height;
 	
+	// Mark for removal
+	protected boolean remove;
+	
 	public GameObject() {
 		ignoreFriction = false;
+		remove = false;
 		
 		position = new Vector();
 		velocity = new Vector();
 		acceleration = new Vector();
 		
+		width = 4.5f;
+		height = 4.5f;
+		
 		sprite = ImageManager.getImage("exit_icon.png");
-		collisionBox = Polygon.circle(5, 5 + (int) (Math.random() * 3));;
+		
+		// Initialize Collision Box
+		collisionBox = Polygon.circle(4.5f, 5 + (int) (Math.random() * 3));;
 		collisionBox.setCenter(this.position);
 		
-		width = 5f;
-		height = 5f;
+		// Subscribe to Game
+		ExampleState.objects.add(this);
 		
 		// Subscribe to physics
 		PhysicsManager.AddObject(this);
+		
 	}
 	
 	// Setter Methods
@@ -57,10 +71,20 @@ public class GameObject {
 	public void rotateInplace(float radians) {
 		// Rotate both the collision box and sprite
 		collisionBox.rotateInplace(radians);
-		sprite.rotate(radians);
+		
+		// Save rotation for sprite
+		rotation += radians;
 	}
 	
 	// Accessor Methods
+	public boolean isFrictionless() {
+		return ignoreFriction;
+	}
+	
+	public Polygon getCollisionBox() {
+		return collisionBox;
+	}
+	
 	public Vector getPosition() {
 		return position;
 	}
@@ -71,6 +95,10 @@ public class GameObject {
 	
 	public Vector getAcceleration() {
 		return acceleration;
+	}
+	
+	public boolean removalMarked() {
+		return remove;
 	}
 	
 	// Checks for collision with another gameobject
@@ -90,22 +118,28 @@ public class GameObject {
 		if (sprite != null) {
 			// Rescale sprite
 			sprite = sprite.getScaledCopy((int) (width * Config.PIXELS_PER_UNIT), (int) (height * Config.PIXELS_PER_UNIT));
+			// Rotate sprite to match our rotation
+			sprite.setCenterOfRotation((int) (width * Config.PIXELS_PER_UNIT) / 2, (int) (height * Config.PIXELS_PER_UNIT) / 2);
+			sprite.rotate(-rotation * 180f);
 			
-			Vector screen = GraphicsManager.WorldToScreen(position);
+			// Find top-left corner of object
+			Vector topleft = position.offset(-width / 2, height / 2);
+			
+			Vector screen = GraphicsManager.WorldToScreen(topleft);
 			sprite.draw(screen.x, screen.y);
 		}
 			
 	}
 	
 	// Updates the GameObject
-	public void update() { }
+	public void update(float deltaTime) { }
 	
 	// Collision Callback
 	public void onCollide(GameObject o) { }
 	
 	// Deletes the GameObject
 	public void remove() {
-		PhysicsManager.RemoveObject(this);
+		remove = true;
 	}
 	
 }

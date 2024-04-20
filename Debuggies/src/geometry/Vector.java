@@ -35,6 +35,29 @@ public class Vector {
 		return output;
 	}
 	
+	// Assigns the values from parameter vector into this vector
+	public void assign(Vector v) {
+		x = v.x;
+		y = v.y;
+	}
+	
+	// Copies this vector
+	public Vector copy() {
+		return new Vector(x, y);
+	}
+	
+	// Returns the magnitude of the vector
+	public float magnitude() {
+		return (float) Math.sqrt(x * x + y * y);
+	}
+	
+	// Normalizes a vector and rerturns a copy of it
+	public Vector normalize() {
+		Vector copy = copy();
+		copy.scaleInplace(1 / copy.magnitude());
+		return copy;
+	}
+	
 	// Rotates (in-place) the vector by radius theta
 	public void rotateInplace(float radians) {
 		float rotateX = (float) (Math.cos(radians) * x - Math.sin(radians) * y);
