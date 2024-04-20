@@ -7,10 +7,11 @@ import graphics.ImageManager;
 import objects.Enemy.EnemyErrorType;
 import objects.Entity.Team;
 import objects.projectiles.Spike;
+import objects.projectiles.Syntax;
 
 public class SyntaxErrorEnemy extends Enemy {
 	
-	private static final float ShotDelay = 3f;
+	private static final float ShotDelay = 6f;
 	
 	protected float timeBetweenShots;
 	
@@ -41,13 +42,13 @@ public class SyntaxErrorEnemy extends Enemy {
 		velocity.assign(direction);
 		velocity.scaleInplace(velo);
 		
-		// projectiles are characters (curly brace, semicolon)
+		// projectiles are characters (semicolon)
 		if (timeBetweenShots < 0) {
 			timeBetweenShots = ShotDelay;
 			
 			// Shoot at player
-			final float bulletVelo = 40f;
-			new Spike(this, direction.scale(bulletVelo));
+			final float bulletVelo = 20f;
+			new Syntax(this, direction.scale(bulletVelo));
 		}
 	}
 }
