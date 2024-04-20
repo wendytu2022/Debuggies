@@ -267,7 +267,7 @@ public class ExampleState extends BasicGameState {
 		for (int i = 0; i < objects.size(); i++) {
 			targetIndex = (targetIndex + objects.size() + offset) % objects.size();
 			GameObject o = objects.get(targetIndex);
-			
+
 			// Skip if marked for removal
 			if (o.removalMarked())
 				continue;
@@ -282,10 +282,11 @@ public class ExampleState extends BasicGameState {
 					
 					targetEntity = e;
 					targetAnimate = 0f;
+					
 					cl.setEnemy(targetEntity);
 					cl.setAnswer(targetEntity);
 					
-					continue;
+					break;
 				}
 			}
 
@@ -312,12 +313,14 @@ public class ExampleState extends BasicGameState {
 		 if (paused || aiming)
 			 return;
 		
-		 // Otherwise, shoot a bullet from the player 
-		 Vector spawn = GraphicsManager.ScreenToWorld(new Vector(x, y));
+		 if (!player.removalMarked() ) {
+			// Otherwise, shoot a bullet from the player 
+			 Vector spawn = GraphicsManager.ScreenToWorld(new Vector(x, y));
 
-		 // Orientate the bullet in the direction that the mouse is
-		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
-		 Spike s = new Spike(player, direction);
+			 // Orientate the bullet in the direction that the mouse is
+			 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
+			 Spike s = new Spike(player, direction);
+		 }
 	}
 	
 	// Called one every frame for rendering

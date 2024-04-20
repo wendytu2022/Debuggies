@@ -120,9 +120,9 @@ public class CommandLine extends Box{
 		line_line.setTextColor(Color.green);
 		line_line.render(gc, g);
 		
-		g.drawImage(problem_set[enemy.enemyErrorType.ordinal()].getScaledCopy(600, 500), 
+		g.drawImage(problem_set[enemy.enemyErrorType.ordinal()].getScaledCopy((int)(0.31f * Config.SCREEN_WIDTH), (int) (0.51f  * Config.SCREEN_HEIGHT)), 
 				(int) (0.62f * Config.SCREEN_WIDTH), 
-				(int) (0.25f * Config.SCREEN_HEIGHT));
+				(int) (0.225f * Config.SCREEN_HEIGHT));
 		
 	}
 
