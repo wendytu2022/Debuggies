@@ -27,6 +27,7 @@ import objects.GameObject;
 import objects.IndexOutOfBoundsEnemy;
 import objects.StackOverflowEnemy;
 import objects.SyntaxErrorEnemy;
+import objects.UninitializedVariableEnemy;
 import objects.Player;
 import objects.Enemy;
 import objects.Breakpoint;
@@ -124,6 +125,16 @@ public class ExampleState extends BasicGameState {
 		
 		for (int i = 0; i < 5; i++) {
 			sampleEnemy = new SyntaxErrorEnemy();
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));	
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			sampleEnemy = new UninitializedVariableEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
 			sampleEnemy.getPosition().assign(
