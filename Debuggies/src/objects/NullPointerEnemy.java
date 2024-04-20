@@ -8,7 +8,7 @@ public class NullPointerEnemy extends Enemy {
 	}
 	
 	@Override
-	public void update() {
+	public void update(float deltaTime) {
 		// attack at one point of the screen
 	}
 }

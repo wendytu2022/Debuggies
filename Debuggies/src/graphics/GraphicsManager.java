@@ -22,4 +22,14 @@ public class GraphicsManager {
 		
 		return output;
 	}
+	
+	// Convert screen position to world position
+	public static Vector ScreenToWorld(Vector screenCoords) {
+		Vector output = new Vector(screenCoords.x - Config.SCREEN_WIDTH / 2, screenCoords.y - Config.SCREEN_HEIGHT / 2);
+		output.scaleInplace(1 / Config.PIXELS_PER_UNIT);
+		output.offsetInplace(center.x, -center.y);
+		output.y = -output.y;
+		
+		return output;
+	}
 }
