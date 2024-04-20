@@ -16,7 +16,7 @@ public class Main extends StateBasedGame
 	public static final int EXAMPLE_ID = 0;
       
     // BasicGameStates 
-    private static BasicGameState example;
+    public static ExampleState example;
     
     private static AppGameContainer appgc;
     
