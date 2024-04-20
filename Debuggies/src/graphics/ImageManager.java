@@ -29,5 +29,21 @@ public class ImageManager {
 		return images.get(file);
 	}
 	
+	// Get an image, or load it if it doesn't exist
+		public static Image getImage(String file, String folder) {
+			// Add to cache if it doesn't exist
+			if (!images.containsKey(file)) {
+				Image newImage;
+				
+				try {
+					newImage = new Image(folder + file);
+					images.put(file, newImage);
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+			}			
+			
+			return images.get(file);
+		}
 	
 }

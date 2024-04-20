@@ -13,6 +13,7 @@ import org.newdawn.slick.gui.TextField;
 
 import core.Config;
 import core.states.ExampleState;
+import objects.Enemy;
 
 public class CommandLine extends Box{
 		
@@ -28,6 +29,11 @@ public class CommandLine extends Box{
 	private String problem_answer = "dummy answer";
 	private String line_number = "dummy answer";
 	
+	private Image[] problem_set = new Image[6];
+	private String[] problem_list = new String[6];
+	private String[] number_list = new String[6];
+	private Enemy enemy;
+	
 	/* --- Command Line Generation --- */
 	 public static TrueTypeFont getNewFont(String fontName, int fontSize) throws SlickException {
 	        // Load the TrueTypeFont from the given font file with specified size
@@ -38,12 +44,43 @@ public class CommandLine extends Box{
 	/* --- Constructor --- */
 	public CommandLine(GameContainer gc, Input user_input) throws SlickException {
 		super();
+		this.enemy = null;
 		this.gc = gc;
 		this.user_input = user_input;
 		this.font = getNewFont("Helvetica", 38);
 	}
 	
+	public void setEnemy(Enemy targetEntity) {
+		this.enemy = targetEntity;
+	}
 	public void initialize() {
+		
+		problem_list = new String[]
+				{"array",
+				 "concurrent",
+				 "null",
+				 "overflow",
+				 "sytax",
+				 "variable"};
+		
+		number_list = new String[] 
+				{"69",
+				 "48",
+				 "27",
+				 "39",
+				 "66",
+				 "77"};
+		String folder = "res/Code Snippets/";
+		problem_set = new Image[] 
+				{ImageManager.getImage("ArrayIndexOutOfBoundsException.png",folder),
+				 ImageManager.getImage("ConcurrentModificationException.png",folder),
+				 ImageManager.getImage("NullPointerException.png",folder),
+				 ImageManager.getImage("StackOverflowError.png",folder),
+				 ImageManager.getImage("SyntaxError.png",folder),
+				 ImageManager.getImage("UninitializedVariable.png",folder)
+				};
+		
+		
 		/* Initialize the Error Prompt */
 		problem_line = new TextField(gc, font,((int) (0.70f * Config.SCREEN_WIDTH)),
 				((int) (0.75f * Config.SCREEN_HEIGHT)),
@@ -82,6 +119,11 @@ public class CommandLine extends Box{
 		line_line.setBackgroundColor(semiTransparent);
 		line_line.setTextColor(Color.green);
 		line_line.render(gc, g);
+		
+		g.drawImage(problem_set[enemy.enemyErrorType.ordinal()].getScaledCopy(600, 500), 
+				(int) (0.62f * Config.SCREEN_WIDTH), 
+				(int) (0.25f * Config.SCREEN_HEIGHT));
+		
 	}
 
 	public boolean check() {
@@ -89,9 +131,9 @@ public class CommandLine extends Box{
 				line_line.getText().equals(line_number)) ;
 	}
 	
-	public void setAnswer(String p, String l) {
-		this.problem_answer = p;
-		this.line_number = l;
+	public void setAnswer(Enemy enemy_number) {
+		this.problem_answer = problem_list[enemy_number.enemyErrorType.ordinal()];
+		this.line_number = number_list[enemy_number.enemyErrorType.ordinal()];
 	}
 	
 	@Override

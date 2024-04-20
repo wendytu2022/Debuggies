@@ -15,21 +15,19 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.Config;
 import core.Main;
-import graphics.BottomBar;
 import graphics.Box;
 import graphics.CommandLine;
 import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
-import graphics.Lefttool;
 import graphics.Prompt;
-import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
 import objects.StackOverflowEnemy;
 import objects.SyntaxErrorEnemy;
 import objects.Player;
+import objects.Enemy;
 import objects.Entity;
 import objects.Entity.Team;
 import objects.physics.PhysicsManager;
@@ -65,7 +63,7 @@ public class ExampleState extends BasicGameState {
 	public static boolean aiming;		// Tracks whether or not we are aiming or not
 	private float aimingTimer;  // Tracks how long the aiming should run for
 	
-	private Entity targetEntity; // Object we're focused on
+	private Enemy targetEntity; // Object we're focused on
 	private int targetIndex;    // Tracks index in the objects array to find our next target
 	
 	
@@ -87,9 +85,6 @@ public class ExampleState extends BasicGameState {
 	
 	/* --- Boxes --- */
 	private Exit exit; // Escape Button
-//	private Toolbar toolbar; // Toolbar Icon
-//	private Lefttool lefttool; // Left Tool Icon
-//	private BottomBar bottomBar; // Bottom Bar icon
 	private CommandLine cl; // Command Line Text
 	private Prompt background;
 	
@@ -147,28 +142,6 @@ public class ExampleState extends BasicGameState {
 			.setWidth((int) (Config.SCREEN_WIDTH - (0.2f)*Config.SCREEN_WIDTH))
 			.setHeight((int) (Config.SCREEN_HEIGHT - (0.2f)*Config.SCREEN_HEIGHT))
 			.initialize();
-		
-//		toolbar = new Toolbar(gc);
-//		toolbar
-//				.setX(10)
-//				.setY(10)
-//				.setWidth(1)
-//				.setHeight(1)
-//				.initialize();	
-//		lefttool = new Lefttool(gc);
-//		lefttool
-//				.setX(10)
-//				.setY(10)
-//				.setWidth(1)
-//				.setHeight(1)
-//				.initialize();	
-//		bottomBar = new BottomBar(gc);
-//		bottomBar
-//				.setX(10)
-//				.setY(10)
-//				.setWidth(1)
-//				.setHeight(1)
-//				.initialize();	
 	}
 	
 	
@@ -209,6 +182,10 @@ public class ExampleState extends BasicGameState {
 			}
 		}
 		
+		if (!aiming && key == Input.KEY_ESCAPE) {
+			System.exit(0);
+		}
+		
 	}
 
 	
@@ -244,14 +221,16 @@ public class ExampleState extends BasicGameState {
 			
 			// Check that target is an entity, and it is a
 			// class we can kill
-			if (o instanceof Entity) {
-				Entity e = (Entity) o;
+			if (o instanceof Enemy) {
+				Enemy e = (Enemy) o;
 				
 				if (e.getTeam() != Team.Ally) {
 					found = true; 
 					
 					targetEntity = e;
 					targetAnimate = 0f;
+					cl.setEnemy(targetEntity);
+					cl.setAnswer(targetEntity);
 					
 					continue;
 				}
