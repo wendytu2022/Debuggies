@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import core.Config;
 import core.Main;
 import graphics.Exit;
 import graphics.ImageManager;
@@ -21,6 +22,9 @@ public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
 	private Shape shape;
+	private Shape shape2;
+	
+	private float offsetSize = 1 * Config.PIXELS_PER_UNIT;
 	
 	private Input user_input;
 	
@@ -28,7 +32,8 @@ public class ExampleState extends BasicGameState {
 	public ExampleState(int id) { 
 		this.id = id; 
 		
-		this.shape = new Circle(100, 100, 3f);
+		this.shape = new Circle(500, 500, 20f);
+		this.shape2 = new Circle(100, 700, 20f);
 	}
 		
 	/* --- Accessor Methods --- */
@@ -76,26 +81,18 @@ public class ExampleState extends BasicGameState {
 
 	// Runs when a key is pressed
 	@Override // Input Determining
-	public void keyPressed(int key, char c) {
-		float amount = 50000.f;
-		
-		switch (c) {
-		case 'w':
-			o1.setAcceleration(0, amount);
-			break;
-		case 'a':
-			o1.setAcceleration(-amount, 0);
-			break;
-		case 's':
-			o1.setAcceleration(0, -amount);
-			break;
-		case 'd':
-			o1.setAcceleration(amount, 0);
-			break;
+	public void keyPressed(int key, char c) { 
+		if (key == Input.KEY_DOWN) {
+			addOffset(0, -offsetSize);
 		}
-    
-    if (key == Input.KEY_ESCAPE) {
-			  System.exit(0);
+		if (key == Input.KEY_UP) {
+			addOffset(0, offsetSize);
+		}
+		if (key == Input.KEY_LEFT) {
+			addOffset(offsetSize, 0);
+		}
+		if (key == Input.KEY_RIGHT) {
+			addOffset(-offsetSize, 0);
 		}
 	}
 	
@@ -133,28 +130,41 @@ public class ExampleState extends BasicGameState {
 			p1.render(g, new Color(0.15f, 0.2f, 0.3f));
 			p2.render(g, new Color(0.15f, 0.2f, 0.3f));
 		}
+
+		g.draw(shape);
 		
+		shape.setCenterX(shape.getCenterX());
+		shape.setCenterY(shape.getCenterY());	
 		
+		g.draw(shape2);
+		
+		shape2.setCenterX(shape2.getCenterX());
+		shape2.setCenterY(shape2.getCenterY());
+		
+				
 	}
 
 	// Called once every frame for updating
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
-		
-		if (user_input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
-			// Attain the mouse x and y at the current time of the click
-			float curr_x = user_input.getMouseX();
-			float curr_y = user_input.getMouseY();
-			if (exit.handleMouse(curr_x, curr_y)) {
-				System.out.println("handled");
-			} else {
-				System.out.println("not handeled");
-			}
-			
+		Input input = gc.getInput();
+		if (input.isKeyDown(Input.KEY_DOWN)) {				 
+			keyPressed(Input.KEY_DOWN, '0'); 
+		} else if (input.isKeyDown(Input.KEY_UP)) {
+			keyPressed(Input.KEY_UP, '0');
+		} else if (input.isKeyDown(Input.KEY_LEFT)) {
+			keyPressed(Input.KEY_LEFT, '0');
+		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
+			keyPressed(Input.KEY_RIGHT, '0');
 		}
+	}
+	
+	public void addOffset(float x, float y) {
+		shape.setCenterX(shape.getCenterX() + x);
+		shape.setCenterY(shape.getCenterY() + y);
 		
-		exit.update();
-		
+		shape2.setCenterX(shape2.getCenterX() + x);
+		shape2.setCenterY(shape2.getCenterY() + y);
 	}
 	
 	
