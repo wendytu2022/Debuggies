@@ -1,4 +1,6 @@
 package core.states;
+import java.awt.Font;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,11 +13,18 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Main;
+import graphics.BottomBar;
+import graphics.CommandLine;
 import graphics.Exit;
 import graphics.ImageManager;
+import graphics.Lefttool;
+import graphics.Toolbar;
 import geometry.Polygon;
 import objects.GameObject;
 import objects.physics.PhysicsManager;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
+
 
 public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
@@ -40,7 +49,10 @@ public class ExampleState extends BasicGameState {
 	
 	/* --- Boxes --- */
 	private Exit exit; // Escape Button
-	
+//	private Toolbar toolbar; // Toolbar Icon
+//	private Lefttool lefttool; // Left Tool Icon
+//	private BottomBar bottomBar; // Bottom Bar icon
+	private CommandLine cl; // Command Line Text
 	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
@@ -57,10 +69,41 @@ public class ExampleState extends BasicGameState {
 		exit
 			.setX(0)
 			.setY(0)
-			.setWidth(10)
-			.setHeight(10)
+			.setWidth(15)
+			.setHeight(15)
 			.initialize();	
+		
+		cl = new CommandLine(gc, user_input);
+		cl
+			.setX(0.5f * 1080)
+			.setY(0.9f * 1920)
+			.setWidth(0.95f * 1080)
+			.setHeight(0.055f * 1920)
+			.initialize();
+		
+//		toolbar = new Toolbar(gc);
+//		toolbar
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
+//		lefttool = new Lefttool(gc);
+//		lefttool
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
+//		bottomBar = new BottomBar(gc);
+//		bottomBar
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
 	}
+	
 	
 	// Runs when game state is entered
 	@Override
@@ -113,14 +156,15 @@ public class ExampleState extends BasicGameState {
 	// Called one every frame for rendering
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//		exit.draw(g);
-		Image im = ImageManager.getImage("exit_icon.png");
-		im.getScaledCopy(15, 15);
-		im.draw();
 		
-		exit.draw(g);
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
-		
+		g.clear();
+		g.setBackground(new Color(0.14f, 0.14f, 0.15f)); // background VSCode color
+		exit.draw(g);
+		cl.draw(g);
+//		toolbar.draw(g);
+//		lefttool.draw(g);
+//		bottomBar.draw(g);
 		PhysicsManager.UpdatePhysics(1 / 60.f);
 		p1.rotateInplace(0.05f);
 		
@@ -152,9 +196,14 @@ public class ExampleState extends BasicGameState {
 			}
 			
 		}
-		
-		exit.update();
-		
+		 if (cl.line.hasFocus()) {
+	            // Check if Enter key is pressed
+	            if (user_input.isKeyPressed(Input.KEY_ENTER)) {
+	                // Clear the text field
+	                cl.line.setText("");
+	            }
+	        }
+					
 	}
 	
 	
