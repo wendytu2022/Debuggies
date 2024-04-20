@@ -42,7 +42,7 @@ public class NullPointerEnemy extends Enemy {
 		// Set velocity to always be moving towards player
 		Vector direction = position.lookAt(player.getPosition()).normalize();
 
-		final float velo = 0.75f;
+		final float velo = 0.5f;
 		velocity.assign(direction);
 		velocity.scaleInplace(velo);
 

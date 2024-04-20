@@ -33,7 +33,7 @@ public class Zero extends GameObject {
 		this.ignoreFriction = true;		
 		
 		// Set Collision Box
-		collisionBox = Polygon.circle(0.75f, 5);
+		collisionBox = Polygon.circle(1.f, 5);
 		collisionBox.setCenter(this.position);
 		
 		width = 3f;
