@@ -36,12 +36,5 @@ public class Exit extends Box{
 		gc.exit();
 	}
 
-	@Override
-	protected void keyPress(int key) {
-		  if (key == Input.KEY_ESCAPE) {
-			  gc.exit();
-		  }
-	}
-
 }
 

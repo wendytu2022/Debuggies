@@ -206,6 +206,7 @@ public class ExampleState extends BasicGameState {
 		}
 		
 	}
+
 	
 	// Begin aim mode
 	private void beginAiming(float timer) {
@@ -220,28 +221,6 @@ public class ExampleState extends BasicGameState {
 			// Set focus on CMD line for typing
 			cl.setFocus(true);
 		}
-
-		if (key == Input.KEY_RIGHT) {
-			addOffset(-offsetSize, 0);
-
-		if (key == Input.KEY_ESCAPE) {
-			System.exit(0);
-		}
-		
-	}
-	
-	// Begin aim mode
-	private void beginAiming(float timer) {
-		// If we're to turn aiming on, select a GameObject to target
-		if (!aiming) {
-			// Select object
-			nextTarget(1);
-			
-			// Detach the position so that we can allow camera movement
-			GraphicsManager.center = GraphicsManager.center.copy(); 
-			
-			// Set focus on CMD line for typing
-			cl.setFocus(true);
 		
 		aimingTimer = timer;
 		aiming = true;
@@ -302,11 +281,6 @@ public class ExampleState extends BasicGameState {
 
 		 // Orientate the bullet in the direction that the mouse is
 		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
-		 
-		 Spike s = new Spike(player, direction);
-
-		 // Orientate the bullet in the direction that the mouse is
-		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
 		 Spike s = new Spike(player, direction);
 	}
 	
@@ -340,8 +314,6 @@ public class ExampleState extends BasicGameState {
 			background.draw(g);
 			g.setColor(Color.green);
 			cl.draw(g);
-		}
-	
 		}
 		
 		// Draw GUI
@@ -392,7 +364,7 @@ public class ExampleState extends BasicGameState {
 			GraphicsManager.center.offsetInplace(offset.x, offset.y);
 			
 			
-			if (aiming && user_input.isKeyPressed(Input.KEY_LALT)) {
+			if (aiming && (user_input.isKeyPressed(Input.KEY_LALT) || user_input.isKeyPressed(Input.KEY_LCONTROL))) {
 				if (alt) {
 					cl.problem_line.setFocus(true);
 				} else {

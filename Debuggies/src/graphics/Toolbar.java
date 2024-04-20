@@ -32,10 +32,5 @@ public class Toolbar extends Box{
 	@Override
 	protected void mouseClick(float mouseX, float mouseY) {
 	}
-
-	@Override
-	protected void keyPress(int key) {
-	}
-
 }
 

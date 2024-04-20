@@ -33,9 +33,6 @@ public class Lefttool extends Box{
 	protected void mouseClick(float mouseX, float mouseY) {
 	}
 
-	@Override
-	protected void keyPress(int key) {
-	}
 
 }
 
