@@ -12,6 +12,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Main;
 import graphics.Exit;
 
+import geometry.Polygon;
+import objects.GameObject;
+import objects.physics.PhysicsManager;
+
 public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
@@ -39,6 +43,9 @@ public class ExampleState extends BasicGameState {
 	// Runs when game state is initialized (on constructor call)
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		p1.setPosition(o1.getPosition());
+		p1.getCenter().offsetInplace(450, 500);
+		p2.getCenter().offsetInplace(500, 550);
 		
 		exit = new Exit(gc);
 		exit
@@ -47,7 +54,6 @@ public class ExampleState extends BasicGameState {
 			.setWidth(1)
 			.setHeight(1)
 			.initialize();	
-		
 	}
 	
 	// Runs when game state is entered
@@ -64,10 +70,27 @@ public class ExampleState extends BasicGameState {
 
 	// Runs when a key is pressed
 	@Override // Input Determining
-	public void keyPressed(int key, char c) { 
-		  if (key == Input.KEY_ESCAPE) {
+	public void keyPressed(int key, char c) {
+		float amount = 50000.f;
+		
+		switch (c) {
+		case 'w':
+			o1.setAcceleration(0, amount);
+			break;
+		case 'a':
+			o1.setAcceleration(-amount, 0);
+			break;
+		case 's':
+			o1.setAcceleration(0, -amount);
+			break;
+		case 'd':
+			o1.setAcceleration(amount, 0);
+			break;
+		}
+    
+    if (key == Input.KEY_ESCAPE) {
 			  System.exit(0);
-		  }
+		}
 	}
 	
 	// Runs when the mouse is pressed
@@ -76,14 +99,29 @@ public class ExampleState extends BasicGameState {
 		 
 	}
 	
+	Polygon p1 = Polygon.circle(100.f, 10);
+	Polygon p2 = Polygon.rectangle(25, 25);
+	
+	GameObject o1 = new GameObject();
+	
 	// Called one every frame for rendering
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 //		exit.draw(g);
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
-		g.draw(shape);
-		shape.setCenterX(shape.getCenterX() + 0.1f);
-		shape.setCenterY(shape.getCenterY() + 0.1f);
+		
+		PhysicsManager.UpdatePhysics(1 / 60.f);
+		p1.rotateInplace(0.05f);
+		
+		if (p1.collidesWith(p2)) {
+			p1.render(g, new Color(0.5f, 0.2f, 0.5f));
+			p2.render(g, new Color(0.5f, 0.2f, 0.5f));
+		}
+		else {
+			System.out.println("No Collide");
+			p1.render(g, new Color(0.15f, 0.2f, 0.3f));
+			p2.render(g, new Color(0.15f, 0.2f, 0.3f));
+		}
 		
 		
 	}
