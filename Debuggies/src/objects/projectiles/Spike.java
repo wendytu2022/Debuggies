@@ -42,7 +42,7 @@ public class Spike extends GameObject {
 		sprite = null;
 		
 		// Set damage
-		damage = 15f;
+		damage = 10f;
 		
 		timeElapsed = 0f;
 	}

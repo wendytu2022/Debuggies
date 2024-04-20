@@ -69,6 +69,12 @@ public class ExampleState extends BasicGameState {
 	private Enemy targetEntity; // Object we're focused on
 	private int targetIndex;    // Tracks index in the objects array to find our next target
 	
+	// Grid
+	private Image grid;
+	
+	// Timer for Breakpoint Orbs
+	private static final float BreakpointRespawn = 7.5f;
+	private float breakpointTimer;
 	
 	private float targetAnimate;
 	
@@ -100,14 +106,13 @@ public class ExampleState extends BasicGameState {
 		paused = false;
 		alt = false;
 		
+		breakpointTimer = BreakpointRespawn;
+		
 		// Create Objects Array
 		objects = new ArrayList<>();
 		newObjects = new ArrayList<>();
 		
 		// Create Player
-		Breakpoint b = new Breakpoint();
-		b.getPosition().offsetInplace(75.f, -25.f);
-		
 		player = new Player();
 		
 		// Create Enemies
@@ -331,6 +336,27 @@ public class ExampleState extends BasicGameState {
 		g.clear();
 		g.setBackground(new Color(0.14f, 0.14f, 0.15f)); // background VSCode color
 		
+		// Render grid
+		Vector topLeft = GraphicsManager.ScreenToWorld(new Vector(0,0));
+		Vector bottomRight = GraphicsManager.ScreenToWorld(new Vector(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT));
+		
+		g.setColor(new Color(0.56f, 0.93f, 0.56f, 0.45f));
+		
+		// Vertical Lines
+		for (float x = 10.f * (float) Math.floor(topLeft.x / 10.f); 
+				x <= 10.f * (float) Math.ceil(bottomRight.x / 10.f); x += 10f) {
+			Vector screen = GraphicsManager.WorldToScreen(new Vector(x, 0));
+			
+			g.drawLine(screen.x, 0, screen.x, Config.SCREEN_HEIGHT);
+		}
+		
+		// Horizontal Lines
+		for (float y = 10.f * (float) Math.ceil(topLeft.y / 10.f);
+				y >= 10.f * (float) Math.floor(bottomRight.y / 10.f); y -= 10f) {
+			Vector screen = GraphicsManager.WorldToScreen(new Vector(0, y));
+			g.drawLine(0, screen.y, Config.SCREEN_WIDTH, screen.y);
+		}
+		
 //		toolbar.draw(g);
 //		lefttool.draw(g);
 //		bottomBar.draw(g);
@@ -381,7 +407,7 @@ public class ExampleState extends BasicGameState {
 		
 		// Zoom based on aim
 		Config.PIXELS_PER_UNIT = 10f + targetAnimate * 5f;
-
+		
 		// Freeze all entities on aim
 		if (aiming) {
 			aimingTimer -= 1 / 60.f;
@@ -448,6 +474,20 @@ public class ExampleState extends BasicGameState {
 	            }
             }
 		} else {
+			// Check to create breakpoint
+			breakpointTimer -= 1 / 60.f;
+			
+			if (breakpointTimer < 0) {
+				breakpointTimer = BreakpointRespawn;
+				
+				float radians = (float) (Math.random() * 2 * Math.PI);
+				float randomX = 25.f * (float) Math.cos(radians);
+				float randomY = 25.f * (float) Math.sin(radians);
+				
+				Breakpoint b = new Breakpoint();
+				b.getPosition().assign(player.getPosition().offset(randomX, randomY));			
+			}
+			
 			// Handle Movement Input (CANNOT MOVE ON AIM)
 			Input input = gc.getInput();
 			final float offsetSize = 35.f;

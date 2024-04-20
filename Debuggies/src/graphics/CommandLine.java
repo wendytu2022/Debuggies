@@ -60,7 +60,7 @@ public class CommandLine extends Box{
 				 "concurrent",
 				 "null",
 				 "overflow",
-				 "sytax",
+				 "syntax",
 				 "variable"};
 		
 		number_list = new String[] 
