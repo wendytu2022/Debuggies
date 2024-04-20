@@ -1,7 +1,7 @@
 package objects;
 
 public class Enemy extends Entity{
-	enum EnemyErrorType { 
+	public enum EnemyErrorType { 
 		NullPointer, 
 		StackOverflow, 
 		IndexOutOfBounds, 
@@ -9,7 +9,7 @@ public class Enemy extends Entity{
 		SyntaxError,
 		UninitializedVar };
 		
-	protected EnemyErrorType enemyErrorType;
+	public EnemyErrorType enemyErrorType;
 	
 	public Enemy(Team team, int health, EnemyErrorType enemyErrorType) {
 		super(team, health);
