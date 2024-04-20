@@ -3,6 +3,8 @@ package geometry;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import graphics.GraphicsManager;
+
 // Represents a generic convex polygon for collisions
 public class Polygon {
 	// List of vertices for the polygon. MUST form a convex polygon
@@ -87,14 +89,22 @@ public class Polygon {
 		return p;
 	}
 	
+	// Set Associated Player Center
+	public void setCenter(Vector v) {
+		center = v;
+	}
+	
 	// Debug renderig
 	public void render(Graphics g, Color rgb) {
 		for (int i = 0; i < vertices.length - 1; i++) {
-			Vector v1 = vertices[i];
-			Vector v2 = vertices[i + 1];
+			Vector v1 = vertices[i].offset(center.x, center.y);
+			Vector v2 = vertices[i + 1].offset(center.x, center.y);
+			
+			v1 = GraphicsManager.WorldToScreen(v1);
+			v2 = GraphicsManager.WorldToScreen(v2);
 			
 			g.setColor(rgb);
-			g.drawLine(v1.x + center.x, v1.y + center.y, v2.x + center.x, v2.y + center.y);
+			g.drawLine(v1.x, v1.y, v2.x, v2.y);
 		}
 	}
 	

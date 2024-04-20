@@ -1,5 +1,6 @@
 package core.states;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,14 +13,17 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import core.Config;
 import core.Main;
 import graphics.BottomBar;
 import graphics.CommandLine;
 import graphics.Exit;
+import graphics.GraphicsManager;
 import graphics.ImageManager;
 import graphics.Lefttool;
 import graphics.Toolbar;
 import geometry.Polygon;
+import geometry.Vector;
 import objects.GameObject;
 import objects.physics.PhysicsManager;
 import org.newdawn.slick.TrueTypeFont;
@@ -29,15 +33,20 @@ import org.newdawn.slick.UnicodeFont;
 public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
-	private Shape shape;
+	// Player Object
+	private GameObject player;
+	
+	// Game Entities
+	private ArrayList<GameObject> objects;
+	
+	// 
+	private float offsetSize = 2.5f;
 	
 	private Input user_input;
 	
 	// Constructor
 	public ExampleState(int id) { 
 		this.id = id; 
-		
-		this.shape = new Circle(100, 100, 3f);
 	}
 		
 	/* --- Accessor Methods --- */
@@ -60,9 +69,24 @@ public class ExampleState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		user_input = gc.getInput();
 		
-		p1.setPosition(o1.getPosition());
-		p1.getCenter().offsetInplace(450, 500);
-		p2.getCenter().offsetInplace(500, 550);
+		objects = new ArrayList<>();
+		
+		player = new GameObject();
+		player.getPosition().x = -1.5f;
+		
+		objects.add(player);
+		
+		GameObject o1 = new GameObject();
+		GameObject o2 = new GameObject();
+		
+		o1.getPosition().x = (float) (500 * Math.random()) - 5f;
+		o2.getPosition().x = (float) (500 * Math.random()) - 15f;
+		
+		objects.add(o1);
+		objects.add(o2);
+		
+		// Set Camera onto Player
+		GraphicsManager.center = player.getPosition();
 		
 		//Create and scale the size of the box to press
 		exit = new Exit(gc);
@@ -119,26 +143,18 @@ public class ExampleState extends BasicGameState {
 
 	// Runs when a key is pressed
 	@Override // Input Determining
-	public void keyPressed(int key, char c) {
-		float amount = 50000.f;
-		
-		switch (c) {
-		case 'w':
-			o1.setAcceleration(0, amount);
-			break;
-		case 'a':
-			o1.setAcceleration(-amount, 0);
-			break;
-		case 's':
-			o1.setAcceleration(0, -amount);
-			break;
-		case 'd':
-			o1.setAcceleration(amount, 0);
-			break;
+	public void keyPressed(int key, char c) { 
+		if (key == Input.KEY_DOWN) {
+			addOffset(0, -offsetSize);
 		}
-    
-    if (key == Input.KEY_ESCAPE) {
-			  System.exit(0);
+		if (key == Input.KEY_UP) {
+			addOffset(0, offsetSize);
+		}
+		if (key == Input.KEY_LEFT) {
+			addOffset(offsetSize, 0);
+		}
+		if (key == Input.KEY_RIGHT) {
+			addOffset(-offsetSize, 0);
 		}
 	}
 	
@@ -147,11 +163,6 @@ public class ExampleState extends BasicGameState {
 	public void mousePressed(int key, int x, int y) { 
 		 
 	}
-	
-	Polygon p1 = Polygon.circle(100.f, 10);
-	Polygon p2 = Polygon.rectangle(25, 25);
-	
-	GameObject o1 = new GameObject();
 	
 	// Called one every frame for rendering
 	@Override
@@ -165,36 +176,37 @@ public class ExampleState extends BasicGameState {
 //		toolbar.draw(g);
 //		lefttool.draw(g);
 //		bottomBar.draw(g);
-		PhysicsManager.UpdatePhysics(1 / 60.f);
-		p1.rotateInplace(0.05f);
-		
-		if (p1.collidesWith(p2)) {
-			p1.render(g, new Color(0.5f, 0.2f, 0.5f));
-			p2.render(g, new Color(0.5f, 0.2f, 0.5f));
-		}
-		else {
-			System.out.println("No Collide");
-			p1.render(g, new Color(0.15f, 0.2f, 0.3f));
-			p2.render(g, new Color(0.15f, 0.2f, 0.3f));
+
+		// Render all gameobjects
+		for (GameObject o : objects) {
+			o.render(g);
 		}
 		
-		
+		// Draw GUI
+		exit.draw(g);
+				
 	}
 
 	// Called once every frame for updating
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		Input input = gc.getInput();
+		GraphicsManager.center = player.getPosition();
 		
-		if (user_input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
-			// Attain the mouse x and y at the current time of the click
-			float curr_x = user_input.getMouseX();
-			float curr_y = user_input.getMouseY();
-			if (exit.handleMouse(curr_x, curr_y)) {
-				System.out.println("handled");
-			} else {
-				System.out.println("not handeled");
-			}
-			
+		// Input Handling
+		if (input.isKeyDown(Input.KEY_Q))
+			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT + 1;
+		if (input.isKeyDown(Input.KEY_E))
+			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT - 1;
+		
+		if (input.isKeyDown(Input.KEY_DOWN)) {				 
+			addOffset(0, -offsetSize);
+		} else if (input.isKeyDown(Input.KEY_UP)) {
+			addOffset(0, offsetSize);
+		} else if (input.isKeyDown(Input.KEY_LEFT)) {
+			addOffset(-offsetSize, 0);
+		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
+			addOffset(offsetSize, 0);
 		}
 		 if (cl.line.hasFocus()) {
 	            // Check if Enter key is pressed
@@ -204,6 +216,19 @@ public class ExampleState extends BasicGameState {
 	            }
 	        }
 					
+		// Update Physics
+		PhysicsManager.UpdatePhysics(1 / 60.f);
+		
+		// Update all gameobjects
+		for (GameObject o : objects) {
+			o.update();
+		}
+	}
+	
+	public void addOffset(float x, float y) {
+		player.getPosition().x = player.getPosition().x + x;
+		player.getPosition().y = player.getPosition().y + y;
+
 	}
 	
 	

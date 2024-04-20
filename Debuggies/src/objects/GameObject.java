@@ -4,8 +4,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import core.Config;
 import geometry.Polygon;
 import geometry.Vector;
+import graphics.GraphicsManager;
+import graphics.ImageManager;
 import objects.physics.PhysicsManager;
 
 // Represents a generic gameobject
@@ -23,6 +26,8 @@ public class GameObject {
 	
 	// For Rendering
 	protected Image sprite;
+	protected float width;
+	protected float height;
 	
 	public GameObject() {
 		ignoreFriction = false;
@@ -31,8 +36,12 @@ public class GameObject {
 		velocity = new Vector();
 		acceleration = new Vector();
 		
-		sprite = null;
-		collisionBox = null;
+		sprite = ImageManager.getImage("exit_icon.png");
+		collisionBox = Polygon.circle(5, 5 + (int) (Math.random() * 3));;
+		collisionBox.setCenter(this.position);
+		
+		width = 5f;
+		height = 5f;
 		
 		// Subscribe to physics
 		PhysicsManager.AddObject(this);
@@ -78,8 +87,14 @@ public class GameObject {
 		collisionBox.render(g, Color.white);
 		
 		// Render the sprite
-		if (sprite != null) 
-			sprite.draw(position.x, position.y);
+		if (sprite != null) {
+			// Rescale sprite
+			sprite = sprite.getScaledCopy((int) (width * Config.PIXELS_PER_UNIT), (int) (height * Config.PIXELS_PER_UNIT));
+			
+			Vector screen = GraphicsManager.WorldToScreen(position);
+			sprite.draw(screen.x, screen.y);
+		}
+			
 	}
 	
 	// Updates the GameObject
@@ -87,5 +102,10 @@ public class GameObject {
 	
 	// Collision Callback
 	public void onCollide(GameObject o) { }
+	
+	// Deletes the GameObject
+	public void remove() {
+		PhysicsManager.RemoveObject(this);
+	}
 	
 }

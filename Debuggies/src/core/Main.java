@@ -2,7 +2,9 @@ package core;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -14,7 +16,7 @@ public class Main extends StateBasedGame
 	public static final int EXAMPLE_ID = 0;
       
     // BasicGameStates 
-    private BasicGameState example;
+    private static BasicGameState example;
     
     private static AppGameContainer appgc;
     
@@ -53,6 +55,7 @@ public class Main extends StateBasedGame
 			
 			// Begin application, entering first state added
 			appgc.start();
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
