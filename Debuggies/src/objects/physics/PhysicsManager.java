@@ -14,6 +14,11 @@ public class PhysicsManager {
 	// List of objects to perform physics on
 	private static ArrayList<GameObject> objects = new ArrayList<>();
 	
+	// Resets the static class
+	public static void Reset() {
+		objects.clear();
+	}
+	
 	// Subscribes object to the physics engine
 	public static void AddObject(GameObject o) {
 		objects.add(o);

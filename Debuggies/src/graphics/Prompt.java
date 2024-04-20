@@ -45,7 +45,7 @@ public class Prompt extends Box{
 	}
 	
 //	Directly draw the image to the game, top left corner
-	public void draw(Graphics g) {		
+	public void draw(Graphics g, float aimTime) {		
 		Color semiTransparent = new Color(0f, 0f, 0f, 0.5f);
 		g.setColor(semiTransparent);
 		g.fillRect(((int) (Config.SCREEN_WIDTH - (0.4f)*Config.SCREEN_WIDTH)),
@@ -56,6 +56,20 @@ public class Prompt extends Box{
 		font.drawString(((int) (Config.SCREEN_WIDTH - (0.39f)*Config.SCREEN_WIDTH)), (int) (Config.SCREEN_HEIGHT - (0.25f)*Config.SCREEN_HEIGHT), "Problem: ", Color.green);
 		font.drawString(((int) (Config.SCREEN_WIDTH - (0.39f)*Config.SCREEN_WIDTH)), (int) (Config.SCREEN_HEIGHT - (0.17f)*Config.SCREEN_HEIGHT), "Line: ", Color.green);
 
+		// Draw the timer
+		g.setColor(Color.black);
+		g.fillRect(
+				((int) (Config.SCREEN_WIDTH - (0.05f) * Config.SCREEN_WIDTH)),
+				((int) (Config.SCREEN_HEIGHT - (0.1f)*Config.SCREEN_HEIGHT)),
+				((int) (Config.SCREEN_WIDTH * 0.02f)),
+				-((int) (Config.SCREEN_HEIGHT - (0.3f)*Config.SCREEN_HEIGHT)));
+		
+		g.setColor(new Color(0.137f, 0.402f, 0.502f));
+		g.fillRect(
+				((int) (Config.SCREEN_WIDTH - (0.05f) * Config.SCREEN_WIDTH)),
+				((int) (Config.SCREEN_HEIGHT - (0.1f)*Config.SCREEN_HEIGHT)),
+				((int) (Config.SCREEN_WIDTH * 0.02f)),
+				-((int) ((Config.SCREEN_HEIGHT - (0.3f)*Config.SCREEN_HEIGHT) * aimTime)));
 		
 //		g.drawRect(((int) (Config.SCREEN_WIDTH - (0.4f)*Config.SCREEN_WIDTH)),
 //				((int) (Config.SCREEN_HEIGHT - (0.8f)*Config.SCREEN_HEIGHT)),

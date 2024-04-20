@@ -123,7 +123,6 @@ public class CommandLine extends Box{
 		g.drawImage(problem_set[enemy.enemyErrorType.ordinal()].getScaledCopy((int)(0.31f * Config.SCREEN_WIDTH), (int) (0.51f  * Config.SCREEN_HEIGHT)), 
 				(int) (0.62f * Config.SCREEN_WIDTH), 
 				(int) (0.225f * Config.SCREEN_HEIGHT));
-		
 	}
 
 	public boolean check() {
