@@ -24,7 +24,7 @@ public class EndButton extends Box{
 //	Directly draw the image to the game, top left corner
 	public void draw(Graphics g) {
 	
-		exit_button = ImageManager.getImage("red_bug.png");
+		exit_button = ImageManager.getImage("quit.png");
 		g.drawImage(exit_button.getScaledCopy((int)(Config.SCREEN_WIDTH * 0.25f), (int)(Config.SCREEN_HEIGHT * 0.25f)), Config.SCREEN_WIDTH * 0.58f, Config.SCREEN_HEIGHT * 0.75f);
 	}
 

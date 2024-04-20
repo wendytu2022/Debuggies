@@ -28,7 +28,7 @@ public class StartButton extends Box{
 //	Directly draw the image to the game, top left corner
 	public void draw(Graphics g) {
 	
-		start_button = ImageManager.getImage("green_bug.png");
+		start_button = ImageManager.getImage("start.png");
 		g.drawImage(start_button.getScaledCopy((int)(Config.SCREEN_WIDTH * 0.25f), (int)(Config.SCREEN_HEIGHT * 0.25f)), Config.SCREEN_WIDTH * 0.15f, Config.SCREEN_HEIGHT * 0.75f);
 	}
 
