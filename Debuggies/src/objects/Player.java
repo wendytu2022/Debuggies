@@ -25,8 +25,8 @@ public class Player extends Entity {
 		this.ignoreFriction = false;
 		
 		this.sprite = ImageManager.getImage("duggiefront.png");
-		this.width = 15f;
-		this.height = 15f; 
+		this.width = 11.5f;
+		this.height = 11.5f; 
 		
 		collisionBox = Polygon.rectangle(0.3f * width, 0.85f * height);
 		collisionBox.setCenter(position);	

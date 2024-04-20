@@ -24,10 +24,13 @@ import graphics.Prompt;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
+import objects.IndexOutOfBoundsEnemy;
 import objects.StackOverflowEnemy;
 import objects.SyntaxErrorEnemy;
 import objects.Player;
 import objects.Enemy;
+import objects.Breakpoint;
+import objects.ConcurrentModificationEnemy;
 import objects.Entity;
 import objects.Entity.Team;
 import objects.physics.PhysicsManager;
@@ -51,7 +54,6 @@ public class ExampleState extends BasicGameState {
 
 	// Game Entities
 	private Entity sampleEnemy;
-	private StackOverflowEnemy sampleStackOverflowEnemy;
 	
 	public static ArrayList<GameObject> objects;
 	public static ArrayList<GameObject> newObjects;
@@ -102,12 +104,52 @@ public class ExampleState extends BasicGameState {
 		newObjects = new ArrayList<>();
 		
 		// Create Player
+		Breakpoint b = new Breakpoint();
+		b.getPosition().offsetInplace(75.f, -25.f);
+		
 		player = new Player();
 		
 		// Create Enemies
+		final float radius = 100f;
+		
 		for (int i = 0; i < 2; i++) {
 			sampleEnemy = new StackOverflowEnemy();
-			sampleEnemy.getPosition().x = (float) (500 * Math.random()) - 15f;	
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			sampleEnemy = new SyntaxErrorEnemy();
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));	
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			sampleEnemy = new IndexOutOfBoundsEnemy();
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));	
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			sampleEnemy = new ConcurrentModificationEnemy();
+			
+			float radians = (float) (Math.random() * 2 * Math.PI);
+			sampleEnemy.getPosition().assign(
+					new Vector(
+							(float) (Math.cos(radians) * radius),
+							(float) (Math.sin(radians) * radius)));	
 		}
 		
 		// Load target graphic
@@ -190,7 +232,7 @@ public class ExampleState extends BasicGameState {
 
 	
 	// Begin aim mode
-	private void beginAiming(float timer) {
+	public void beginAiming(float timer) {
 		// If we're to turn aiming on, select a GameObject to target
 		if (!aiming) {
 			// Select object
