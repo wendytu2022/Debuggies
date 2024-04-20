@@ -25,6 +25,7 @@ import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
+import objects.Player;
 import objects.Entity;
 import objects.Entity.Team;
 import objects.physics.PhysicsManager;
@@ -51,7 +52,7 @@ public class ExampleState extends BasicGameState {
 	private final static int TargetSize = 15;
 	
 	private Image targetImage;  // Image to be rendered
-	private boolean aiming;		// Tracks whether or not we are aiming or not
+	public static boolean aiming;		// Tracks whether or not we are aiming or not
 	private float aimingTimer;  // Tracks how long the aiming should run for
 	
 	private Entity targetEntity; // Object we're focused on
@@ -93,7 +94,7 @@ public class ExampleState extends BasicGameState {
 		objects = new ArrayList<>();
 		
 		// Create Player
-		player = new Entity(Team.Ally, 100);
+		player = new Player();
 		
 		// Create Enemies
 		for (int i = 0; i < 5; i++) {
@@ -213,7 +214,7 @@ public class ExampleState extends BasicGameState {
 		boolean found = false;
 		
 		for (int i = 0; i < objects.size(); i++) {
-			targetIndex = (targetIndex + offset) % objects.size();
+			targetIndex = (targetIndex + objects.size() + offset) % objects.size();
 			GameObject o = objects.get(targetIndex);
 			
 			// Skip if marked for removal
@@ -254,7 +255,7 @@ public class ExampleState extends BasicGameState {
 	@Override
 	public void mousePressed(int key, int x, int y) { 
 		 // Do nothing if paused
-		 if (paused)
+		 if (paused || aiming)
 			 return;
 		
 		 // Otherwise, shoot a bullet from the player 
@@ -262,7 +263,6 @@ public class ExampleState extends BasicGameState {
 		 
 		 // Orientate the bullet in the direction that the mouse is
 		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
-		 
 		 Spike s = new Spike(player, direction);
 	}
 	
@@ -300,7 +300,11 @@ public class ExampleState extends BasicGameState {
 		exit.draw(g);
 				
 		if (paused) {
-			g.setBackground(new Color(0.5f, 0.5f, 0.5f, 0.25f));
+			g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.25f));
+			g.fillRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+			
+			Image pause = ImageManager.getImage("pause.png");
+			pause.draw(Config.SCREEN_WIDTH / 2 - pause.getWidth() / 2, Config.SCREEN_HEIGHT / 2 - pause.getHeight() / 2);
 		}
 	}
 
@@ -332,12 +336,14 @@ public class ExampleState extends BasicGameState {
 				cl.setFocus(false);
 			}
 			
-			// Handle aiming animation
-			targetAnimate = Math.min(1, targetAnimate + 0.05f);
-			
-			Vector offset = GraphicsManager.center.lookAt(targetEntity.getPosition());
-			offset.scaleInplace(targetAnimate);
-			GraphicsManager.center.offsetInplace(offset.x, offset.y);
+			if (targetEntity != null) {
+				// Handle aiming animation
+				targetAnimate = Math.min(1, targetAnimate + 0.05f);
+				
+				Vector offset = GraphicsManager.center.lookAt(targetEntity.getPosition());
+				offset.scaleInplace(targetAnimate);
+				GraphicsManager.center.offsetInplace(offset.x, offset.y);
+			}
 			
 			// CMD line in here? Show command line and allow us to type in stuff
 			// Handle Command Line

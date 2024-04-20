@@ -1,7 +1,13 @@
 package objects.projectiles;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
+
+import core.Config;
 import geometry.Polygon;
 import geometry.Vector;
+import graphics.GraphicsManager;
 import objects.Entity;
 import objects.GameObject;
 
@@ -25,11 +31,14 @@ public class Spike extends GameObject {
 		this.ignoreFriction = true;		
 		
 		// Set Collision Box
-		collisionBox = Polygon.circle(1.5f, 5);
+		collisionBox = Polygon.circle(0.75f, 5);
 		collisionBox.setCenter(this.position);
 		
 		width = 1.5f;
 		height = 1.5f;
+		
+		// No sprite
+		sprite = null;
 		
 		// Set damage
 		damage = 15f;
@@ -45,6 +54,16 @@ public class Spike extends GameObject {
 		if (timeElapsed > 10) {
 			this.remove();
 		}
+	}
+	
+	// Render
+	public void render(Graphics g) {
+		Vector screen = GraphicsManager.WorldToScreen(position);
+		g.setColor(Color.red);
+		g.fill(new Circle(screen.x, screen.y, 0.75f * Config.PIXELS_PER_UNIT));
+		
+		collisionBox.render(g, Color.white);
+		
 	}
 		
 	@Override
