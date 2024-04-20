@@ -28,6 +28,13 @@ public class Vector {
 		return new Vector(-v.x, -v.y);
 	}
 	
+	// Given a destination, returns the vector pointing to
+	// this destination
+	public Vector lookAt(Vector destination) {
+		Vector output = new Vector(destination.x - x, destination.y - y);
+		return output;
+	}
+	
 	// Rotates (in-place) the vector by radius theta
 	public void rotateInplace(float radians) {
 		float rotateX = (float) (Math.cos(radians) * x - Math.sin(radians) * y);

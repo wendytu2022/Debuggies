@@ -1,5 +1,6 @@
 package objects;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -10,6 +11,9 @@ import objects.physics.PhysicsManager;
 // Represents a generic gameobject
 public class GameObject {
 	// Physics Variables
+	// If friction dampening should be ignored or not
+	protected boolean ignoreFriction; 
+	
 	protected Vector position;
 	protected Vector velocity;
 	protected Vector acceleration;
@@ -21,6 +25,8 @@ public class GameObject {
 	protected Image sprite;
 	
 	public GameObject() {
+		ignoreFriction = false;
+		
 		position = new Vector();
 		velocity = new Vector();
 		acceleration = new Vector();
@@ -36,6 +42,13 @@ public class GameObject {
 	public void setAcceleration(float x, float y) {
 		acceleration.x = x;
 		acceleration.y = y;
+	}
+	
+	// Rotate the object a specified amount of radians
+	public void rotateInplace(float radians) {
+		// Rotate both the collision box and sprite
+		collisionBox.rotateInplace(radians);
+		sprite.rotate(radians);
 	}
 	
 	// Accessor Methods
@@ -60,12 +73,19 @@ public class GameObject {
 	}
 	
 	// Renders the GameObject
-	public void render(Graphics g) {}
+	public void render(Graphics g) {
+		// Render the collision box
+		collisionBox.render(g, Color.white);
+		
+		// Render the sprite
+		if (sprite != null) 
+			sprite.draw(position.x, position.y);
+	}
 	
 	// Updates the GameObject
 	public void update() { }
 	
 	// Collision Callback
-	public void onCollide(GameObject o) {}
+	public void onCollide(GameObject o) { }
 	
 }

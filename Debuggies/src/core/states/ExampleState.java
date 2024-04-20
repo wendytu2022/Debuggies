@@ -2,6 +2,7 @@ package core.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
@@ -11,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.Main;
 import graphics.Exit;
-
+import graphics.ImageManager;
 import geometry.Polygon;
 import objects.GameObject;
 import objects.physics.PhysicsManager;
@@ -20,7 +21,7 @@ public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
 	private Shape shape;
-	
+	 
 	// Constructor
 	public ExampleState(int id) { 
 		this.id = id; 
@@ -108,6 +109,10 @@ public class ExampleState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 //		exit.draw(g);
+		Image im = ImageManager.getImage("exit_icon.png");
+		im.getScaledCopy(15, 15);
+		im.draw();
+		
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
 		
 		PhysicsManager.UpdatePhysics(1 / 60.f);

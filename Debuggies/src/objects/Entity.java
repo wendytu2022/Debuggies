@@ -11,4 +11,12 @@ public class Entity extends GameObject {
 		this.health = health;
 	}
 	
+	@Override
+	public void update() {
+		// Calls superclass update method
+		super.update();
+		
+		
+	}
+	
 }
