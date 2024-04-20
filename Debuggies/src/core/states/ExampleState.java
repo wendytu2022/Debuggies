@@ -366,6 +366,7 @@ public class ExampleState extends BasicGameState {
 			
 			if (aiming && (user_input.isKeyPressed(Input.KEY_LALT) || user_input.isKeyPressed(Input.KEY_LCONTROL))) {
 				if (alt) {
+					alt = !alt;
 					cl.problem_line.setFocus(true);
 				} else {
 					alt = !alt;
