@@ -1,20 +1,29 @@
 package objects;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import core.Config;
 import core.states.ExampleState;
 import geometry.Polygon;
+import geometry.Vector;
+import graphics.GraphicsManager;
 import graphics.ImageManager;
 
 public class Player extends Entity {
 	
 	private static final float FrameTime = 0.1f;
 	
+	private final static int MaxHealth = 100;
+	private final static float BarWidth = 7.5f;
+	private final static float BarHeight = 1.5f;
+	
+	
 	private float elapsedTime;
 	
 	public Player() {
-		super(Team.Ally, 100);
+		super(Team.Ally, MaxHealth);
 		
 		// Preload all the images
 		ImageManager.getImage("duggieonline.png");
@@ -69,7 +78,18 @@ public class Player extends Entity {
 				}
 			}
 		}
-				
+		
+		// Render Everything
 		super.render(g);
+		
+		// Render Player Health
+		Vector center = position.offset(0, -height / 2 - BarHeight / 2 - 1f);
+		Vector topLeft = GraphicsManager.WorldToScreen(center.offset(-BarWidth / 2, BarHeight / 2));
+		
+		g.setColor(Color.red);
+		g.fillRect(topLeft.x, topLeft.y, BarWidth * Config.PIXELS_PER_UNIT, BarHeight * Config.PIXELS_PER_UNIT);
+		g.setColor(Color.green);
+		g.fillRect(topLeft.x, topLeft.y, BarWidth * health / MaxHealth * Config.PIXELS_PER_UNIT, BarHeight* Config.PIXELS_PER_UNIT);
+		
 	}
 }

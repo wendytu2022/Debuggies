@@ -112,6 +112,8 @@ public class ExampleState extends BasicGameState {
 		objects = new ArrayList<>();
 		newObjects = new ArrayList<>();
 		
+		PhysicsManager.Reset();
+		
 		// Create Player
 		player = new Player();
 		
@@ -376,8 +378,9 @@ public class ExampleState extends BasicGameState {
 			targetImage.draw(screen.x - (TargetSize * Config.PIXELS_PER_UNIT) / 2, screen.y - (TargetSize * Config.PIXELS_PER_UNIT) / 2);
 			
 			// Draw command line
-			background.draw(g);
+			background.draw(g, aimingTimer / 10.f);
 			g.setColor(Color.green);
+			
 			cl.draw(g);
 		}
 		
@@ -450,6 +453,7 @@ public class ExampleState extends BasicGameState {
                     // If success, kill enemy
                     targetEntity.remove();
                     nextTarget(1);
+                    aimingTimer = (float) Math.min(10f, aimingTimer + 2f);
                 } else {                }
             	/* Empty the text field */
                 cl.problem_line.setText("");
