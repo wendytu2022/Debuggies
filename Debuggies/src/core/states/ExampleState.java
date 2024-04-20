@@ -16,11 +16,13 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Config;
 import core.Main;
 import graphics.BottomBar;
+import graphics.Box;
 import graphics.CommandLine;
 import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
 import graphics.Lefttool;
+import graphics.Prompt;
 import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
@@ -36,6 +38,15 @@ public class ExampleState extends BasicGameState {
 	// Player Object
 	private GameObject player;
 	
+<<<<<<< Updated upstream
+=======
+	// Paused
+	private boolean paused;
+	
+	// Lalt
+	private boolean alt;
+		
+>>>>>>> Stashed changes
 	// Game Entities
 	private ArrayList<GameObject> objects;
 	
@@ -62,6 +73,7 @@ public class ExampleState extends BasicGameState {
 //	private Lefttool lefttool; // Left Tool Icon
 //	private BottomBar bottomBar; // Bottom Bar icon
 	private CommandLine cl; // Command Line Text
+	private Prompt background;
 	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
@@ -69,6 +81,13 @@ public class ExampleState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		user_input = gc.getInput();
 		
+<<<<<<< Updated upstream
+=======
+		paused = false;
+		alt = false;
+		
+		// Create Objects Array
+>>>>>>> Stashed changes
 		objects = new ArrayList<>();
 		
 		player = new GameObject();
@@ -103,6 +122,13 @@ public class ExampleState extends BasicGameState {
 			.setY(0.9f * 1920)
 			.setWidth(0.95f * 1080)
 			.setHeight(0.055f * 1920)
+			.initialize();
+		background = new Prompt(gc, user_input);
+		background
+			.setX(0.5f * Config.SCREEN_WIDTH)
+			.setY(0.95f * Config.SCREEN_HEIGHT)
+			.setWidth((int) (Config.SCREEN_WIDTH - (0.2f)*Config.SCREEN_WIDTH))
+			.setHeight((int) (Config.SCREEN_HEIGHT - (0.2f)*Config.SCREEN_HEIGHT))
 			.initialize();
 		
 //		toolbar = new Toolbar(gc);
@@ -153,8 +179,29 @@ public class ExampleState extends BasicGameState {
 		if (key == Input.KEY_LEFT) {
 			addOffset(offsetSize, 0);
 		}
+<<<<<<< Updated upstream
 		if (key == Input.KEY_RIGHT) {
 			addOffset(-offsetSize, 0);
+=======
+		if (key == Input.KEY_ESCAPE) {
+			System.exit(0);
+		}
+		
+	}
+	
+	// Begin aim mode
+	private void beginAiming(float timer) {
+		// If we're to turn aiming on, select a GameObject to target
+		if (!aiming) {
+			// Select object
+			nextTarget(1);
+			
+			// Detach the position so that we can allow camera movement
+			GraphicsManager.center = GraphicsManager.center.copy(); 
+			
+			// Set focus on CMD line for typing
+			cl.setFocus(true);
+>>>>>>> Stashed changes
 		}
 	}
 	
@@ -162,6 +209,14 @@ public class ExampleState extends BasicGameState {
 	@Override
 	public void mousePressed(int key, int x, int y) { 
 		 
+<<<<<<< Updated upstream
+=======
+		 // Orientate the bullet in the direction that the mouse is
+		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
+		 
+		 Spike s = new Spike(player, direction);
+		 
+>>>>>>> Stashed changes
 	}
 	
 	// Called one every frame for rendering
@@ -182,6 +237,24 @@ public class ExampleState extends BasicGameState {
 			o.render(g);
 		}
 		
+<<<<<<< Updated upstream
+=======
+		// Render target if aiming
+		if (aiming) {
+			// Rescale target
+			targetImage = targetImage.getScaledCopy((int) (TargetSize * Config.PIXELS_PER_UNIT), (int) (TargetSize * Config.PIXELS_PER_UNIT));
+			
+			// Draw target on screen center
+			Vector screen = GraphicsManager.WorldToScreen(targetEntity.getPosition());
+			targetImage.draw(screen.x - (TargetSize * Config.PIXELS_PER_UNIT) / 2, screen.y - (TargetSize * Config.PIXELS_PER_UNIT) / 2);
+			
+			// Draw command line
+			background.draw(g);
+			g.setColor(Color.green);
+			cl.draw(g);
+		}
+		
+>>>>>>> Stashed changes
 		// Draw GUI
 		exit.draw(g);
 				
@@ -199,6 +272,7 @@ public class ExampleState extends BasicGameState {
 		if (input.isKeyDown(Input.KEY_E))
 			Config.PIXELS_PER_UNIT = Config.PIXELS_PER_UNIT - 1;
 		
+<<<<<<< Updated upstream
 		if (input.isKeyDown(Input.KEY_DOWN)) {				 
 			addOffset(0, -offsetSize);
 		} else if (input.isKeyDown(Input.KEY_UP)) {
@@ -222,6 +296,103 @@ public class ExampleState extends BasicGameState {
 		// Update all gameobjects
 		for (GameObject o : objects) {
 			o.update();
+=======
+		// Freeze all entities on aim
+		if (aiming) {
+			aimingTimer -= 1 / 60.f;
+			
+			// Check that aiming mode is not over
+			if (aimingTimer < 0) {
+				aiming = false;
+				
+				GraphicsManager.center = player.getPosition();
+				targetAnimate = 0f;
+				
+				// Set focus on CMD line to false
+				cl.setFocus(false);
+			}
+			
+			// Handle aiming animation
+			targetAnimate = Math.min(1, targetAnimate + 0.05f);
+			
+			Vector offset = GraphicsManager.center.lookAt(targetEntity.getPosition());
+			offset.scaleInplace(targetAnimate);
+			GraphicsManager.center.offsetInplace(offset.x, offset.y);
+			
+			
+			if (aiming && user_input.isKeyPressed(Input.KEY_LALT)) {
+				if (alt) {
+					cl.problem_line.setFocus(true);
+				} else {
+					alt = !alt;
+					cl.problem_line.setFocus(false);
+					cl.line_line.setFocus(false);
+				}
+			}
+			
+			
+			/* Interaction with the command line */
+			if (user_input.isKeyPressed(Input.KEY_ENTER)){
+            	/* Check if the answer in the text field is correct */
+                if (cl.check()) {
+                    // If success, kill enemy
+                    targetEntity.remove();
+                    nextTarget(1);
+                } else {                }
+            	/* Empty the text field */
+                cl.problem_line.setText("");
+                cl.line_line.setText("");
+
+                /* Set the user back to the problem command line*/
+                cl.problem_line.setFocus(true);
+                
+            }
+			// CMD line in here? Show command line and allow us to type in stuff
+			// Handle Command Line Tabbing
+			if (cl.problem_line.hasFocus()) {
+	            // Check if Enter key is pressed
+	            if (user_input.isKeyPressed(Input.KEY_TAB)) {
+	                cl.line_line.setFocus(true);
+	            }
+            }
+			if (cl.line_line.hasFocus()) {
+	            // Check if Enter key is pressed
+	            if (user_input.isKeyPressed(Input.KEY_TAB)) {
+	                cl.problem_line.setFocus(true);
+	            }
+            }
+		} else {
+			// Handle Movement Input (CANNOT MOVE ON AIM)
+			Input input = gc.getInput();
+			final float offsetSize = 35.f;
+			
+			Vector velocity = new Vector();
+			
+			if (input.isKeyDown(Input.KEY_S)) {
+				velocity.y -= offsetSize;
+			} 
+			if (input.isKeyDown(Input.KEY_W)) {
+				velocity.y += offsetSize;
+			} 
+			if (input.isKeyDown(Input.KEY_A)) {
+				velocity.x -= offsetSize;
+			} 
+			if (input.isKeyDown(Input.KEY_D)) {
+				velocity.x += offsetSize;
+			}
+			
+			player.getVelocity().assign(velocity);
+			
+			// If not aiming, run game as normal
+			// Update Physics
+			PhysicsManager.UpdatePhysics(1 / 60.f);
+						
+			// Update all gameobjects
+			for (GameObject o : objects) {
+				o.update(1 / 60.f);
+			}
+				
+>>>>>>> Stashed changes
 		}
 	}
 	
