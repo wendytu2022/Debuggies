@@ -1,7 +1,7 @@
 package objects;
 
 public class Entity extends GameObject {
-	enum Team { Ally, Neutral, Enemy };
+	public enum Team { Ally, Neutral, Enemy };
 	
 	protected Team team;
 	protected int health;
@@ -11,12 +11,25 @@ public class Entity extends GameObject {
 		this.health = health;
 	}
 	
+	// Accessors
+	public Team getTeam() {
+		return team;
+	}
+	
 	@Override
-	public void update() {
+	public void update(float deltaTime) {
 		// Calls superclass update method
-		super.update();
+		super.update(deltaTime);		
+	}
+	
+	// Take entity damage
+	public void takeDamage(float dmg) {
+		health -= dmg;
 		
-		
+		// Destroy object if dead
+		if (health <= 0) {
+			this.remove();
+		}
 	}
 	
 }
