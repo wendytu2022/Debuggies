@@ -27,7 +27,7 @@ public class Exit extends Box{
 			e.printStackTrace();
 		}
 
-		g.drawImage(img.getScaledCopy((int) 10, (int) 10),0,0);
+		g.drawImage(img.getScaledCopy(10, 10), 0, 0);
 	}
 
 		

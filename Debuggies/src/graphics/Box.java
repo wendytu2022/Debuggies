@@ -21,11 +21,11 @@ public abstract class Box {
 	public Box() {
 //		Setting Default Values: -1 (All values should be changed for all subclasses)
 //		Position
-		centerX = -1;
-		centerY = -1;		
+		centerX = 0;
+		centerY = 0;		
 //		Size
-		width = -1;
-		height = -1;
+		width = 0;
+		height = 0;
 	}
 	
 //	Initializing Methods
@@ -52,6 +52,15 @@ public abstract class Box {
 	public Box setWidth(float w) {
 		width = w;
 		return this;
+	}
+	
+	public boolean handleMouse(float mouseX, float mouseY) {
+		if ( (centerX - width / 2 < mouseX) && (mouseX < centerX + width / 2)
+				&& (centerY - height / 2 < mouseY) && (mouseY < centerY + height / 2) ) {
+			mouseClick(mouseX, mouseY);
+			return true;
+		} else 
+			return false;
 	}
 	
 	public void draw(Graphics g){
