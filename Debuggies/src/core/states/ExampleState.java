@@ -107,7 +107,7 @@ public class ExampleState extends BasicGameState {
 	// Called one every frame for rendering
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//		exit.draw(g);
+		exit.draw(g);
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
 		
 		PhysicsManager.UpdatePhysics(1 / 60.f);

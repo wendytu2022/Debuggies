@@ -59,7 +59,7 @@ public abstract class Box {
 		g.setColor(Color.white);
 		
 //		Parameters: X, Y, Width, Height
-		g.fillRect(centerX, centerY, width, height);;
+		g.fillRoundRect(centerX, centerY, width, height, 2);;
 	}
 
 	

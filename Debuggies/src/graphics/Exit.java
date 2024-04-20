@@ -27,13 +27,13 @@ public class Exit extends Box{
 			e.printStackTrace();
 		}
 
-		g.drawImage(img,0,0);
+		g.drawImage(img.getScaledCopy((int) 10, (int) 10),0,0);
 	}
 
 		
 	@Override
 	protected void mouseClick(float mouseX, float mouseY) {
-		System.exit(0);;
+		System.exit(0);
 	}
 
 	@Override
