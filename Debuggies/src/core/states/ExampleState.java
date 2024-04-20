@@ -1,4 +1,5 @@
 package core.states;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -14,13 +15,20 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.Config;
 import core.Main;
+import graphics.BottomBar;
+import graphics.CommandLine;
 import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
+import graphics.Lefttool;
+import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
 import objects.physics.PhysicsManager;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
+
 
 public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
@@ -50,7 +58,10 @@ public class ExampleState extends BasicGameState {
 	
 	/* --- Boxes --- */
 	private Exit exit; // Escape Button
-	
+//	private Toolbar toolbar; // Toolbar Icon
+//	private Lefttool lefttool; // Left Tool Icon
+//	private BottomBar bottomBar; // Bottom Bar icon
+	private CommandLine cl; // Command Line Text
 	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
@@ -82,10 +93,41 @@ public class ExampleState extends BasicGameState {
 		exit
 			.setX(0)
 			.setY(0)
-			.setWidth(10)
-			.setHeight(10)
+			.setWidth(15)
+			.setHeight(15)
 			.initialize();	
+		
+		cl = new CommandLine(gc, user_input);
+		cl
+			.setX(0.5f * 1080)
+			.setY(0.9f * 1920)
+			.setWidth(0.95f * 1080)
+			.setHeight(0.055f * 1920)
+			.initialize();
+		
+//		toolbar = new Toolbar(gc);
+//		toolbar
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
+//		lefttool = new Lefttool(gc);
+//		lefttool
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
+//		bottomBar = new BottomBar(gc);
+//		bottomBar
+//				.setX(10)
+//				.setY(10)
+//				.setWidth(1)
+//				.setHeight(1)
+//				.initialize();	
 	}
+	
 	
 	// Runs when game state is entered
 	@Override
@@ -124,7 +166,17 @@ public class ExampleState extends BasicGameState {
 	
 	// Called one every frame for rendering
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {		
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		
+		g.setColor(new Color(0.2f, 0.3f, 0.5f));
+		g.clear();
+		g.setBackground(new Color(0.14f, 0.14f, 0.15f)); // background VSCode color
+		exit.draw(g);
+		cl.draw(g);
+//		toolbar.draw(g);
+//		lefttool.draw(g);
+//		bottomBar.draw(g);
+
 		// Render all gameobjects
 		for (GameObject o : objects) {
 			o.render(g);
@@ -156,7 +208,14 @@ public class ExampleState extends BasicGameState {
 		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
 			addOffset(offsetSize, 0);
 		}
-		
+		 if (cl.line.hasFocus()) {
+	            // Check if Enter key is pressed
+	            if (user_input.isKeyPressed(Input.KEY_ENTER)) {
+	                // Clear the text field
+	                cl.line.setText("");
+	            }
+	        }
+					
 		// Update Physics
 		PhysicsManager.UpdatePhysics(1 / 60.f);
 		
