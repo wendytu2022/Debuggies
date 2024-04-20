@@ -121,7 +121,7 @@ public class ExampleState extends BasicGameState {
 		// Create Enemies
 		final float radius = 100f;
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new StackOverflowEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -131,7 +131,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));
 		}
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new SyntaxErrorEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -141,7 +141,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));	
 		}
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new UninitializedVariableEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -151,7 +151,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));	
 		}
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new IndexOutOfBoundsEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -161,7 +161,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));	
 		}
 		
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 3; i++) {
 			sampleEnemy = new ConcurrentModificationEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
@@ -171,7 +171,7 @@ public class ExampleState extends BasicGameState {
 							(float) (Math.sin(radians) * radius)));	
 		}
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			sampleEnemy = new NullPointerEnemy();
 			
 			float radians = (float) (Math.random() * 2 * Math.PI);
