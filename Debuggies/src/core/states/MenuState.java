@@ -18,6 +18,7 @@ import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
 import graphics.StartButton;
+import objects.Player;
 import objects.projectiles.Spike;
 
 public class MenuState extends BasicGameState {
@@ -44,16 +45,16 @@ public class MenuState extends BasicGameState {
 		
 		start = new StartButton(gc,sbg);
 		start
-			.setX(Config.SCREEN_WIDTH * 0.25f)
-			.setY(Config.SCREEN_HEIGHT * 0.75f)
+			.setX(Config.SCREEN_WIDTH * 0.18f)
+			.setY(Config.SCREEN_HEIGHT * 0.78f)
 			.setWidth(Config.SCREEN_WIDTH * 0.25f)
 			.setHeight(Config.SCREEN_HEIGHT * 0.25f)
 			.initialize();	
 		
 		end = new EndButton(gc,sbg);
 		end
-			.setX(Config.SCREEN_WIDTH * 0.75f)
-			.setY(Config.SCREEN_HEIGHT * 0.75f)
+			.setX(Config.SCREEN_WIDTH * 0.61f)
+			.setY(Config.SCREEN_HEIGHT * 0.79f)
 			.setWidth(Config.SCREEN_WIDTH * 0.25f)
 			.setHeight(Config.SCREEN_HEIGHT * 0.25f)
 			.initialize();	
