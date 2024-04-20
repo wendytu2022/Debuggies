@@ -7,6 +7,8 @@ public class Entity extends GameObject {
     public int health;
     
     public Entity(Team team, int health) {
+    	super();
+    	
         this.ignoreFriction = false;
         
         this.team = team;
