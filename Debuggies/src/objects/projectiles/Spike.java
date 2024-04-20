@@ -10,6 +10,7 @@ public class Spike extends GameObject {
 	private Entity origin;
 	
 	private float damage;
+	private float timeElapsed;
 	
 	public Spike(Entity origin, Vector velocity) {
 		super();
@@ -24,13 +25,28 @@ public class Spike extends GameObject {
 		this.ignoreFriction = true;		
 		
 		// Set Collision Box
-		collisionBox = Polygon.circle(3.5f, 8);
+		collisionBox = Polygon.circle(1.5f, 5);
 		collisionBox.setCenter(this.position);
 		
-		// Set position and velocity
+		width = 1.5f;
+		height = 1.5f;
+		
+		// Set damage
 		damage = 15f;
+		
+		timeElapsed = 0f;
 	}
 	
+	// Updates the GameObject
+	public void update(float deltaTime) { 
+		// Autokill after 10 seconds
+		timeElapsed += deltaTime;
+		
+		if (timeElapsed > 10) {
+			this.remove();
+		}
+	}
+		
 	@Override
 	public void onCollide(GameObject o) {
 		if (o instanceof Entity) {
@@ -38,7 +54,12 @@ public class Spike extends GameObject {
 			Entity e = (Entity) o;
 			
 			if (origin.getTeam() != e.getTeam()) {
+				// Deal Damage
 				e.takeDamage(damage);
+				
+				// Perform Minor Knockback
+				e.getVelocity().offsetInplace(velocity);;
+				
 				// Destroy this projectile
 				this.remove();
 			}

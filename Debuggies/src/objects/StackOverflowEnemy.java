@@ -9,7 +9,7 @@ public class StackOverflowEnemy extends Enemy {
 	}
 	
 	@Override
-	public void update() {
+	public void update(float deltaTime) {
 		// shoot a booty ton of bullets
 	}
 }

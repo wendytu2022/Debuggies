@@ -1,8 +1,11 @@
 package objects.physics;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Stack;
 
 import core.Config;
+import geometry.Projection;
 import geometry.Vector;
 import objects.GameObject;
 
@@ -23,6 +26,9 @@ public class PhysicsManager {
 	
 	// Updates physics once for all objects
 	public static void UpdatePhysics(float deltaTime) {
+		// Remove all marked for removal
+		objects.removeIf(x -> x.removalMarked());
+		
 		// Update object positions and velocities
 		for (GameObject o : objects) {
 			// Update velocity and position
@@ -30,13 +36,13 @@ public class PhysicsManager {
 			Vector velocity = o.getVelocity();
 			Vector acceleration = o.getAcceleration();
 			
-			// Dampen velocity
-			if (!o.isFrictionless())
-				velocity.scaleInplace(Config.FRICTION);
-			
 			// Update velocity and position
 			velocity.offsetInplace(acceleration.scale(deltaTime));
 			position.offsetInplace(velocity.scale(deltaTime));
+			
+			// Dampen velocity
+			if (!o.isFrictionless())
+				velocity.scaleInplace(Config.FRICTION);
 		}
 		
 		// Check for collision, and call callback function on collision

@@ -9,7 +9,7 @@ public class IndexOutOfBoundsEnemy extends Enemy {
 	}
 	
 	@Override
-	public void update() {
+	public void update(float deltaTime) {
 		// teleport, attack, teleport, attack
 	}
 }

@@ -33,20 +33,24 @@ public class GameObject {
 	protected float width;
 	protected float height;
 	
+	// Mark for removal
+	protected boolean remove;
+	
 	public GameObject() {
 		ignoreFriction = false;
+		remove = false;
 		
 		position = new Vector();
 		velocity = new Vector();
 		acceleration = new Vector();
 		
-		width = 5f;
-		height = 5f;
+		width = 4.5f;
+		height = 4.5f;
 		
 		sprite = ImageManager.getImage("exit_icon.png");
 		
 		// Initialize Collision Box
-		collisionBox = Polygon.circle(5, 5 + (int) (Math.random() * 3));;
+		collisionBox = Polygon.circle(4.5f, 5 + (int) (Math.random() * 3));;
 		collisionBox.setCenter(this.position);
 		
 		// Subscribe to Game
@@ -77,6 +81,10 @@ public class GameObject {
 		return ignoreFriction;
 	}
 	
+	public Polygon getCollisionBox() {
+		return collisionBox;
+	}
+	
 	public Vector getPosition() {
 		return position;
 	}
@@ -87,6 +95,10 @@ public class GameObject {
 	
 	public Vector getAcceleration() {
 		return acceleration;
+	}
+	
+	public boolean removalMarked() {
+		return remove;
 	}
 	
 	// Checks for collision with another gameobject
@@ -127,8 +139,7 @@ public class GameObject {
 	
 	// Deletes the GameObject
 	public void remove() {
-		PhysicsManager.RemoveObject(this);
-		ExampleState.objects.remove(this);
+		remove = true;
 	}
 	
 }
