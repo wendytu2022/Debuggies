@@ -228,6 +228,8 @@ public class ExampleState extends BasicGameState {
 		
 		if (key == Input.KEY_T) {
 			// Begin aiming for 10 seconds if T is pressed (later will be a "breakpoint orb")
+            cl.problem_line.setText("");
+            cl.line_line.setText("");
 			beginAiming(10.f); 
 		}
 		// Step between targets
@@ -259,6 +261,8 @@ public class ExampleState extends BasicGameState {
 			
 			// Set focus on CMD line for typing
 			cl.setFocus(true);
+            cl.problem_line.setText("");
+            cl.line_line.setText("");
 		}
 		
 		aimingTimer = timer;
