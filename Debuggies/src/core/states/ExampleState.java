@@ -2,6 +2,7 @@ package core.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
@@ -9,6 +10,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Main;
+import graphics.Exit;
 
 import geometry.Polygon;
 import objects.GameObject;
@@ -32,6 +34,11 @@ public class ExampleState extends BasicGameState {
 		return id; 
 	}
 	
+	
+	/* --- Boxes --- */
+	private Exit exit; // Escape Button
+	
+	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
 	@Override
@@ -39,6 +46,14 @@ public class ExampleState extends BasicGameState {
 		p1.setPosition(o1.getPosition());
 		p1.getCenter().offsetInplace(450, 500);
 		p2.getCenter().offsetInplace(500, 550);
+		
+		exit = new Exit(gc);
+		exit
+			.setX(0)
+			.setY(0)
+			.setWidth(1)
+			.setHeight(1)
+			.initialize();	
 	}
 	
 	// Runs when game state is entered
@@ -72,8 +87,10 @@ public class ExampleState extends BasicGameState {
 			o1.setAcceleration(amount, 0);
 			break;
 		}
-		
-		 
+    
+    if (key == Input.KEY_ESCAPE) {
+			  System.exit(0);
+		}
 	}
 	
 	// Runs when the mouse is pressed
@@ -90,6 +107,7 @@ public class ExampleState extends BasicGameState {
 	// Called one every frame for rendering
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+//		exit.draw(g);
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
 		
 		PhysicsManager.UpdatePhysics(1 / 60.f);
@@ -111,6 +129,7 @@ public class ExampleState extends BasicGameState {
 	// Called once every frame for updating
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		exit.update();
 		
 	}
 	
