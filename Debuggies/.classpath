@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="SlickTemplate/libs/natives"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Debuggies/libs/natives"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/ibxm.jar"/>

@@ -66,6 +66,8 @@ public class ExampleState extends BasicGameState {
 		g.draw(shape);
 		shape.setCenterX(shape.getCenterX() + 0.1f);
 		shape.setCenterY(shape.getCenterY() + 0.1f);
+		
+		
 	}
 
 	// Called once every frame for updating
