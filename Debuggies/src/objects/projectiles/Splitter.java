@@ -43,7 +43,7 @@ public class Splitter extends GameObject {
 		sprite = null;
 		
 		// Set damage
-		damage = 30f;
+		damage = 25f;
 		
 		timeElapsed = 0f;
 	}
