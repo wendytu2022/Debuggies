@@ -21,7 +21,9 @@ public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
 	private Shape shape;
-	 
+	
+	private Input user_input;
+	
 	// Constructor
 	public ExampleState(int id) { 
 		this.id = id; 
@@ -44,16 +46,19 @@ public class ExampleState extends BasicGameState {
 	// Runs when game state is initialized (on constructor call)
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		user_input = gc.getInput();
+		
 		p1.setPosition(o1.getPosition());
 		p1.getCenter().offsetInplace(450, 500);
 		p2.getCenter().offsetInplace(500, 550);
 		
+		//Create and scale the size of the box to press
 		exit = new Exit(gc);
 		exit
 			.setX(0)
 			.setY(0)
-			.setWidth(1)
-			.setHeight(1)
+			.setWidth(10)
+			.setHeight(10)
 			.initialize();	
 	}
 	
@@ -113,6 +118,7 @@ public class ExampleState extends BasicGameState {
 		im.getScaledCopy(15, 15);
 		im.draw();
 		
+		exit.draw(g);
 		g.setColor(new Color(0.2f, 0.3f, 0.5f));
 		
 		PhysicsManager.UpdatePhysics(1 / 60.f);
@@ -134,6 +140,19 @@ public class ExampleState extends BasicGameState {
 	// Called once every frame for updating
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		
+		if (user_input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+			// Attain the mouse x and y at the current time of the click
+			float curr_x = user_input.getMouseX();
+			float curr_y = user_input.getMouseY();
+			if (exit.handleMouse(curr_x, curr_y)) {
+				System.out.println("handled");
+			} else {
+				System.out.println("not handeled");
+			}
+			
+		}
+		
 		exit.update();
 		
 	}
