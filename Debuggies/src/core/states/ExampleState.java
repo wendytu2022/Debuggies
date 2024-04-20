@@ -16,11 +16,13 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Config;
 import core.Main;
 import graphics.BottomBar;
+import graphics.Box;
 import graphics.CommandLine;
 import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
 import graphics.Lefttool;
+import graphics.Prompt;
 import graphics.Toolbar;
 import geometry.Polygon;
 import geometry.Vector;
@@ -44,7 +46,10 @@ public class ExampleState extends BasicGameState {
 	
 	// Paused
 	private boolean paused;
-		
+	
+	// Lalt
+	private boolean alt;
+
 	// Game Entities
 	private Entity sampleEnemy;
 	private StackOverflowEnemy sampleStackOverflowEnemy;
@@ -83,6 +88,7 @@ public class ExampleState extends BasicGameState {
 //	private Lefttool lefttool; // Left Tool Icon
 //	private BottomBar bottomBar; // Bottom Bar icon
 	private CommandLine cl; // Command Line Text
+	private Prompt background;
 	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
@@ -91,6 +97,7 @@ public class ExampleState extends BasicGameState {
 		user_input = gc.getInput();
 		
 		paused = false;
+		alt = false;
 		
 		// Create Objects Array
 		objects = new ArrayList<>();
@@ -128,6 +135,13 @@ public class ExampleState extends BasicGameState {
 			.setY(0.95f * Config.SCREEN_HEIGHT)
 			.setWidth(0.95f * 1080)
 			.setHeight(0.055f * 1920)
+			.initialize();
+		background = new Prompt(gc, user_input);
+		background
+			.setX(0.5f * Config.SCREEN_WIDTH)
+			.setY(0.95f * Config.SCREEN_HEIGHT)
+			.setWidth((int) (Config.SCREEN_WIDTH - (0.2f)*Config.SCREEN_WIDTH))
+			.setHeight((int) (Config.SCREEN_HEIGHT - (0.2f)*Config.SCREEN_HEIGHT))
 			.initialize();
 		
 //		toolbar = new Toolbar(gc);
@@ -206,6 +220,28 @@ public class ExampleState extends BasicGameState {
 			// Set focus on CMD line for typing
 			cl.setFocus(true);
 		}
+
+		if (key == Input.KEY_RIGHT) {
+			addOffset(-offsetSize, 0);
+
+		if (key == Input.KEY_ESCAPE) {
+			System.exit(0);
+		}
+		
+	}
+	
+	// Begin aim mode
+	private void beginAiming(float timer) {
+		// If we're to turn aiming on, select a GameObject to target
+		if (!aiming) {
+			// Select object
+			nextTarget(1);
+			
+			// Detach the position so that we can allow camera movement
+			GraphicsManager.center = GraphicsManager.center.copy(); 
+			
+			// Set focus on CMD line for typing
+			cl.setFocus(true);
 		
 		aimingTimer = timer;
 		aiming = true;
@@ -237,6 +273,7 @@ public class ExampleState extends BasicGameState {
 					continue;
 				}
 			}
+
 		}
 		
 		// If we don't find a target, force exit out of our aim mode
@@ -262,7 +299,12 @@ public class ExampleState extends BasicGameState {
 		
 		 // Otherwise, shoot a bullet from the player 
 		 Vector spawn = GraphicsManager.ScreenToWorld(new Vector(x, y));
+
+		 // Orientate the bullet in the direction that the mouse is
+		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
 		 
+		 Spike s = new Spike(player, direction);
+
 		 // Orientate the bullet in the direction that the mouse is
 		 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
 		 Spike s = new Spike(player, direction);
@@ -295,7 +337,11 @@ public class ExampleState extends BasicGameState {
 			targetImage.draw(screen.x - (TargetSize * Config.PIXELS_PER_UNIT) / 2, screen.y - (TargetSize * Config.PIXELS_PER_UNIT) / 2);
 			
 			// Draw command line
+			background.draw(g);
+			g.setColor(Color.green);
 			cl.draw(g);
+		}
+	
 		}
 		
 		// Draw GUI
@@ -322,7 +368,7 @@ public class ExampleState extends BasicGameState {
 					
 		// Zoom based on aim
 		Config.PIXELS_PER_UNIT = 10f + targetAnimate * 5f;
-		
+
 		// Freeze all entities on aim
 		if (aiming) {
 			aimingTimer -= 1 / 60.f;
@@ -338,28 +384,55 @@ public class ExampleState extends BasicGameState {
 				cl.setFocus(false);
 			}
 			
-			if (targetEntity != null) {
-				// Handle aiming animation
-				targetAnimate = Math.min(1, targetAnimate + 0.05f);
-				
-				Vector offset = GraphicsManager.center.lookAt(targetEntity.getPosition());
-				offset.scaleInplace(targetAnimate);
-				GraphicsManager.center.offsetInplace(offset.x, offset.y);
+			// Handle aiming animation
+			targetAnimate = Math.min(1, targetAnimate + 0.05f);
+			
+			Vector offset = GraphicsManager.center.lookAt(targetEntity.getPosition());
+			offset.scaleInplace(targetAnimate);
+			GraphicsManager.center.offsetInplace(offset.x, offset.y);
+			
+			
+			if (aiming && user_input.isKeyPressed(Input.KEY_LALT)) {
+				if (alt) {
+					cl.problem_line.setFocus(true);
+				} else {
+					alt = !alt;
+					cl.problem_line.setFocus(false);
+					cl.line_line.setFocus(false);
+				}
 			}
 			
+			
+			/* Interaction with the command line */
+			if (user_input.isKeyPressed(Input.KEY_ENTER)){
+            	/* Check if the answer in the text field is correct */
+                if (cl.check()) {
+                    // If success, kill enemy
+                    targetEntity.remove();
+                    nextTarget(1);
+                } else {                }
+            	/* Empty the text field */
+                cl.problem_line.setText("");
+                cl.line_line.setText("");
+
+                /* Set the user back to the problem command line*/
+                cl.problem_line.setFocus(true);
+                
+            }
 			// CMD line in here? Show command line and allow us to type in stuff
-			// Handle Command Line
-			if (cl.line.hasFocus()) {
+			// Handle Command Line Tabbing
+			if (cl.problem_line.hasFocus()) {
 	            // Check if Enter key is pressed
-	            if (user_input.isKeyPressed(Input.KEY_ENTER)) {
-	                // Clear the text field
-	                cl.line.setText("");
-	                
-	                // If success, kill enemy
-	                targetEntity.remove();
-	                nextTarget(1);
+	            if (user_input.isKeyPressed(Input.KEY_TAB)) {
+	                cl.line_line.setFocus(true);
 	            }
-	        }
+            }
+			if (cl.line_line.hasFocus()) {
+	            // Check if Enter key is pressed
+	            if (user_input.isKeyPressed(Input.KEY_TAB)) {
+	                cl.problem_line.setFocus(true);
+	            }
+            }
 		} else {
 			// Handle Movement Input (CANNOT MOVE ON AIM)
 			Input input = gc.getInput();

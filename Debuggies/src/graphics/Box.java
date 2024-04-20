@@ -15,7 +15,7 @@ public abstract class Box {
 
 //	Abstract method for subclasses that require interaction with the mouse (most subclasses will use this)
 	protected abstract void mouseClick(float mouseX, float mouseY);
-	protected abstract void keyPress(int key);
+//	protected abstract void keyPress(int key);
 	
 //	Values should be updated by subclasses
 	public Box() {
