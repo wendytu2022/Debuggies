@@ -54,7 +54,7 @@ public class GameObject {
 		collisionBox.setCenter(this.position);
 		
 		// Subscribe to Game
-		ExampleState.objects.add(this);
+		ExampleState.newObjects.add(this);
 		
 		// Subscribe to physics
 		PhysicsManager.AddObject(this);

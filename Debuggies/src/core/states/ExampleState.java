@@ -28,6 +28,7 @@ import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
 import objects.StackOverflowEnemy;
+import objects.SyntaxErrorEnemy;
 import objects.Player;
 import objects.Entity;
 import objects.Entity.Team;
@@ -53,7 +54,9 @@ public class ExampleState extends BasicGameState {
 	// Game Entities
 	private Entity sampleEnemy;
 	private StackOverflowEnemy sampleStackOverflowEnemy;
+	
 	public static ArrayList<GameObject> objects;
+	public static ArrayList<GameObject> newObjects;
 	
 	// Aim State
 	private final static int TargetSize = 15;
@@ -101,13 +104,14 @@ public class ExampleState extends BasicGameState {
 		
 		// Create Objects Array
 		objects = new ArrayList<>();
+		newObjects = new ArrayList<>();
 		
 		// Create Player
 		player = new Player();
 		
 		// Create Enemies
-		for (int i = 0; i < 5; i++) {
-			sampleEnemy = new Entity(Team.Enemy, 100);
+		for (int i = 0; i < 2; i++) {
+			sampleEnemy = new StackOverflowEnemy();
 			sampleEnemy.getPosition().x = (float) (500 * Math.random()) - 15f;	
 		}
 		
@@ -337,7 +341,9 @@ public class ExampleState extends BasicGameState {
 		
 		// Remove marked objects
 		objects.removeIf(x -> x.removalMarked());
-					
+		objects.addAll(newObjects);
+		newObjects.clear();
+		
 		// Zoom based on aim
 		Config.PIXELS_PER_UNIT = 10f + targetAnimate * 5f;
 
