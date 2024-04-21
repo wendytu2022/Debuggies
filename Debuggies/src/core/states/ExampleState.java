@@ -21,6 +21,7 @@ import graphics.Exit;
 import graphics.GraphicsManager;
 import graphics.ImageManager;
 import graphics.Prompt;
+import graphics.Statistics;
 import geometry.Polygon;
 import geometry.Vector;
 import objects.GameObject;
@@ -81,6 +82,11 @@ public class ExampleState extends BasicGameState {
 	
 	private Input user_input;
 	
+	public int time;
+	public int green;
+	public int yellow;
+	public int red;
+	
 	// Constructor
 	public ExampleState(int id) { 
 		this.id = id; 
@@ -97,6 +103,7 @@ public class ExampleState extends BasicGameState {
 	private Exit exit; // Escape Button
 	private CommandLine cl; // Command Line Text
 	private Prompt background;
+	private Statistics stat;
 	
 	/* --- Inherited Methods --- */
 	// Runs when game state is initialized (on constructor call)
@@ -213,6 +220,13 @@ public class ExampleState extends BasicGameState {
 			.setWidth((int) (Config.SCREEN_WIDTH - (0.2f)*Config.SCREEN_WIDTH))
 			.setHeight((int) (Config.SCREEN_HEIGHT - (0.2f)*Config.SCREEN_HEIGHT))
 			.initialize();
+		stat = new Statistics(gc, user_input);
+		stat
+			.setX(0.5f * Config.SCREEN_WIDTH)
+			.setY(0.5f * Config.SCREEN_HEIGHT)
+			.setWidth(0.5f * Config.SCREEN_WIDTH)
+			.setHeight(0.5f * Config.SCREEN_HEIGHT)
+			.initialize();	
 	}
 	
 	
@@ -344,6 +358,7 @@ public class ExampleState extends BasicGameState {
 			 // Orientate the bullet in the direction that the mouse is
 			 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
 			 Spike s = new Spike(player, direction);
+			 
 		 }
 	}
 	
@@ -412,6 +427,10 @@ public class ExampleState extends BasicGameState {
 			pause.setAlpha(0.25f);
 			pause.draw(Config.SCREEN_WIDTH / 2 - pause.getWidth() / 2, Config.SCREEN_HEIGHT / 2 - pause.getHeight() / 2);
 		}
+		 if (player.removalMarked() ) {
+			 stat.setStat(time,green,yellow,red);
+			 stat.draw(g); 
+		 }
 	}
 
 	// Called once every frame for updating
@@ -545,6 +564,7 @@ public class ExampleState extends BasicGameState {
 			 sbg.getState(0).init(gc, sbg);
 	         sbg.enterState(1);
 		}
+		
 		
 	}
 		
