@@ -132,6 +132,13 @@ public class ExampleState extends BasicGameState {
 		// Create Player
 		player = new Player();
 		
+		float rad = (float) (Math.random() * 2 * Math.PI);
+		float randomX = 35.f * (float) Math.cos(rad);
+		float randomY = 35.f * (float) Math.sin(rad);
+		
+		Breakpoint b = new Breakpoint();
+		b.getPosition().assign(player.getPosition().offset(randomX, randomY));			
+		
 		// Create Enemies
 		final float radius = 100f;
 		
