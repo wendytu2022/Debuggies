@@ -84,7 +84,6 @@ public class ExampleState extends BasicGameState {
 	
 	private Input user_input;
 	
-	public static int time;
 	public static int green;
 	public static int yellow;
 	public static int red;
@@ -425,7 +424,7 @@ public class ExampleState extends BasicGameState {
 		}
 		
 		// Draw GUI
-		exit.draw(g);
+//		exit.draw(g);
 				
 		if (paused) {
 			g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.25f));
@@ -436,7 +435,7 @@ public class ExampleState extends BasicGameState {
 			pause.draw(Config.SCREEN_WIDTH / 2 - pause.getWidth() / 2, Config.SCREEN_HEIGHT / 2 - pause.getHeight() / 2);
 		}
 		 if (player.removalMarked() ) {
-			 stat.setStat(time,green,yellow,red);
+			 stat.setStat(green,yellow,red);
 			 stat.draw(g); 
 		 }
 	}
@@ -522,9 +521,7 @@ public class ExampleState extends BasicGameState {
 	                cl.problem_line.setFocus(true);
 	            }
             }
-		} else {
-			time += 1 / 60.f;
-			
+		} else {			
 			// Check to create breakpoint
 			breakpointTimer -= 1 / 60.f;
 			
@@ -586,6 +583,9 @@ public class ExampleState extends BasicGameState {
 		if (!aiming && user_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			 sbg.getState(0).init(gc, sbg);
 	         sbg.enterState(1);
+			 green = 0;
+			 yellow = 0;
+			 red = 0;
 		}
 		
 		

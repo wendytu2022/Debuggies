@@ -19,10 +19,10 @@ public class Statistics extends Box{
 	/* Setting private variables */
 	private GameContainer gc;
 	private TrueTypeFont font, bigfont;
-	private int time;
 	private int green;
 	private int yellow;
 	private int red;
+	private String status;
 	
 	
 	/* --- Command Line Generation --- */
@@ -38,10 +38,10 @@ public class Statistics extends Box{
 		this.gc = gc;
 		this.font = getNewFont("Courier New", 50);
 		this.bigfont = getNewFont("Courier New", 57);
-		this.time = 0;
 		this.green = 0;
 		this.yellow = 0;
 		this.red = 0;
+		this.status = "";
 	}
 	
 	public void initialize() {
@@ -62,14 +62,14 @@ public class Statistics extends Box{
 				((int) ((0.4f)*Config.SCREEN_WIDTH)),
 				((int) ((0.6f)*Config.SCREEN_HEIGHT)));
 		font.drawString(((int) ((0.423f)*Config.SCREEN_WIDTH)), (int) ((0.25f)*Config.SCREEN_HEIGHT), "Work Report: ", Color.red);
-		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), "Time Survived: ", Color.red);
-		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), ExampleState.time +"", Color.red);
-		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.42f)*Config.SCREEN_HEIGHT), "Green Killed: ", Color.red);
-		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.42f)*Config.SCREEN_HEIGHT), green+"", Color.red);
-		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.49f)*Config.SCREEN_HEIGHT), "Yellow Killed: ", Color.red);
-		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.49f)*Config.SCREEN_HEIGHT), yellow+"", Color.red);
-		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.56f)*Config.SCREEN_HEIGHT), "Red Killed: ", Color.red);
-		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.56f)*Config.SCREEN_HEIGHT), red+"", Color.red);
+//		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), "Time Survived: ", Color.red);
+//		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), ExampleState.time +"", Color.red);
+		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), "Green Resolved: ", Color.red);
+		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), green+"", Color.red);
+		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.45f)*Config.SCREEN_HEIGHT), "Yellow Resolved: ", Color.red);
+		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.45f)*Config.SCREEN_HEIGHT), yellow+"", Color.red);
+		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.55f)*Config.SCREEN_HEIGHT), "Red Resolved: ", Color.red);
+		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.55f)*Config.SCREEN_HEIGHT), red+"", Color.red);
 
 		g.setColor(Color.red);
 //		g.drawLine(((int) ((0.3f)*Config.SCREEN_WIDTH)), (int) ((0.3f)*Config.SCREEN_HEIGHT), ((int) ((0.75f)*Config.SCREEN_WIDTH)), (int) ((0.3f)*Config.SCREEN_HEIGHT));
@@ -78,6 +78,7 @@ public class Statistics extends Box{
 		
 		
 		bigfont.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.68f)*Config.SCREEN_HEIGHT), "Status: ", Color.red);
+		font.drawString(((int) ((0.48f)*Config.SCREEN_WIDTH)), (int) ((0.685f)*Config.SCREEN_HEIGHT), status+"", Color.red);
 
 //		g.setColor(new Color(0.884f, 0.031f, 0.0882f, 1f));
 //		g.fillRect(((int) ((0.325f)*Config.SCREEN_WIDTH)),
@@ -104,11 +105,21 @@ public class Statistics extends Box{
 //		
 	}
 
-	public void setStat(int time, int green, int yellow, int red) {
-		this.time = time;
+	public void setStat(int green, int yellow, int red) {
 		this.green = green;
 		this.yellow = yellow;
 		this.red = red;
+		
+		int total = green + yellow + red;
+		if (total > 20)
+			status = "Get A Raise!!!";
+		else if (total > 15)
+			status = "Great Job!!!!!";
+		else if (total > 10)
+			status = "More Training!";
+		else 
+			status = "You are fired!";
+
 	}
 	
 	@Override
