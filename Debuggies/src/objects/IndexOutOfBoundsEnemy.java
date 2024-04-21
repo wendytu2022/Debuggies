@@ -76,6 +76,12 @@ public class IndexOutOfBoundsEnemy extends Enemy {
 		
 	}
 	
+	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.yellow += 1;
+	}
+	
 	// Renders the GameObject
 	@Override
 	public void render(Graphics g) {

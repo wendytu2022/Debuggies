@@ -26,6 +26,11 @@ public class UninitializedVariableEnemy extends Enemy {
 		timeBetweenShots = ShotDelay;
 	}
 	
+	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.green += 1;
+	}
 	// Buggie is invisible
 	@Override
 	public void update(float deltaTime) {

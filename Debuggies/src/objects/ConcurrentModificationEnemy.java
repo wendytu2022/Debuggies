@@ -26,6 +26,12 @@ public class ConcurrentModificationEnemy extends Enemy {
 	}
 	
 	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.yellow += 1;
+	}
+	
+	@Override
 	public void update(float deltaTime) {
 		Entity player = ExampleState.player;
 		
