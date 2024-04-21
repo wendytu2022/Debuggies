@@ -19,7 +19,7 @@ public class Player extends Entity {
 	private final static float BarWidth = 7.5f;
 	private final static float BarHeight = 1.5f;
 	
-	
+	private float attacking;
 	private float elapsedTime;
 	
 	public Player() {
@@ -44,10 +44,18 @@ public class Player extends Entity {
 		elapsedTime = 0;
 	}
 	
+	// Marks the player to render the "attack" animation
+	public void markAttack(float time) {
+		attacking = time;
+	}
+	
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
 		
+		if (attacking > 0)
+			attacking -= deltaTime;
+
 		elapsedTime += deltaTime;
 	}
 	
@@ -56,7 +64,11 @@ public class Player extends Entity {
 		// Animation Update
 		if (ExampleState.aiming == true) {
 			sprite = ImageManager.getImage("duggieonline.png");
-		} else if (velocity.x == 0) {
+		} 
+		else if (attacking > 0) {
+			sprite = ImageManager.getImage("duggiejump.png");
+		}
+		else if (velocity.x == 0) {
 			sprite = ImageManager.getImage("duggiefront.png");
 		}
 		else {

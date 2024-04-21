@@ -58,7 +58,7 @@ public class StackOverflowEnemy extends Enemy {
 				float randX = (float)(Math.random() * range) + min;
 				float randY = (float)(Math.random() * range) + min;
 
-				new Spike(this, (new Vector(randX, randY)).scale(3.5f));
+				new Spike(this, (new Vector(randX, randY)).scale(2f));
 			}
 			
 			

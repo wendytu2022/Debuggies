@@ -46,7 +46,7 @@ public class ExampleState extends BasicGameState {
 	private int id; // GameState ID
 	
 	// Player Object
-	public static Entity player;
+	public static Player player;
 	
 	// Paused
 	private boolean paused;
@@ -338,7 +338,9 @@ public class ExampleState extends BasicGameState {
 		 if (!player.removalMarked() ) {
 			// Otherwise, shoot a bullet from the player 
 			 Vector spawn = GraphicsManager.ScreenToWorld(new Vector(x, y));
-
+			 
+			 player.markAttack(0.1f);
+			 
 			 // Orientate the bullet in the direction that the mouse is
 			 Vector direction = player.getPosition().lookAt(spawn).normalize().scale(45.f);
 			 Spike s = new Spike(player, direction);
@@ -407,6 +409,7 @@ public class ExampleState extends BasicGameState {
 			g.fillRect(0, 0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 			
 			Image pause = ImageManager.getImage("pause.png");
+			pause.setAlpha(0.25f);
 			pause.draw(Config.SCREEN_WIDTH / 2 - pause.getWidth() / 2, Config.SCREEN_HEIGHT / 2 - pause.getHeight() / 2);
 		}
 	}

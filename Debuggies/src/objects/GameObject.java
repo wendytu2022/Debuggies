@@ -111,8 +111,8 @@ public class GameObject {
 	
 	// Renders the GameObject
 	public void render(Graphics g) {
-		// Render the collision box
-		collisionBox.render(g, Color.white);
+		// Render the collision box (DEBUG)
+		// collisionBox.render(g, Color.white);
 		
 		// Render the sprite
 		if (sprite != null) {

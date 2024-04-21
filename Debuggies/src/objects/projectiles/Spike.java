@@ -67,7 +67,7 @@ public class Spike extends GameObject {
 			g.setColor(Color.red);
 		g.fill(new Circle(screen.x, screen.y, 0.75f * Config.PIXELS_PER_UNIT));
 		
-		collisionBox.render(g, Color.white);
+		// collisionBox.render(g, Color.white);
 		
 	}
 		

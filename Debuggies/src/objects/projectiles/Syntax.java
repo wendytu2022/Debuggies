@@ -63,7 +63,8 @@ public class Syntax extends GameObject {
 	public void render(Graphics g) {
 		Vector screen = GraphicsManager.WorldToScreen(position);
 		
-		collisionBox.render(g, Color.white);
+		// collisionBox.render(g, Color.white);
+
 		super.render(g);
 		
 	}

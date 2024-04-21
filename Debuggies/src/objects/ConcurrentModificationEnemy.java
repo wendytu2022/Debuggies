@@ -1,7 +1,9 @@
 package objects;
 
 import core.states.ExampleState;
+import geometry.Polygon;
 import geometry.Vector;
+import graphics.ImageManager;
 import objects.Enemy.EnemyErrorType;
 import objects.Entity.Team;
 import objects.projectiles.Spike;
@@ -13,6 +15,14 @@ public class ConcurrentModificationEnemy extends Enemy {
 	
 	public ConcurrentModificationEnemy() {
 		super(Team.Enemy, 200, EnemyErrorType.ConcurrentModification);
+		
+		sprite = ImageManager.getImage("yellow_bug.png");
+		
+		this.width = 15f;
+		this.height = 15f;
+
+		this.collisionBox = Polygon.rectangle(0.65f * width, 0.5f * height);
+		this.collisionBox.setCenter(position); 
 	}
 	
 	@Override

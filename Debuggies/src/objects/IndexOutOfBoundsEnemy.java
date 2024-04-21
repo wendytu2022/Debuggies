@@ -8,8 +8,10 @@ import org.newdawn.slick.Graphics;
 
 import core.Config;
 import core.states.ExampleState;
+import geometry.Polygon;
 import geometry.Vector;
 import graphics.GraphicsManager;
+import graphics.ImageManager;
 import objects.Enemy.EnemyErrorType;
 import objects.Entity.Team;
 import objects.projectiles.Spike;
@@ -24,7 +26,13 @@ public class IndexOutOfBoundsEnemy extends Enemy {
 	public IndexOutOfBoundsEnemy() {
 		super(Team.Enemy, 100, EnemyErrorType.IndexOutOfBounds);
 		
+		sprite = ImageManager.getImage("yellow_bug.png");
 		
+		this.width = 15f;
+		this.height = 15f;
+
+		this.collisionBox = Polygon.rectangle(0.65f * width, 0.5f * height);
+		this.collisionBox.setCenter(position); 
 	}
 	
 	// Teleport, attack, teleport, attack
@@ -72,7 +80,7 @@ public class IndexOutOfBoundsEnemy extends Enemy {
 	@Override
 	public void render(Graphics g) {
 		// Render the collision box
-		collisionBox.render(g, Color.white);
+		// collisionBox.render(g, Color.white);
 		
 		// Render the sprite
 		if (sprite != null) {
