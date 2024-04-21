@@ -62,7 +62,7 @@ public class Spike extends GameObject {
 		Vector screen = GraphicsManager.WorldToScreen(position);
 		
 		if (origin.getTeam() == Team.Ally)
-			g.setColor(Color.green);
+			g.setColor(new Color(0,1f,1f));
 		else
 			g.setColor(Color.red);
 		g.fill(new Circle(screen.x, screen.y, 0.75f * Config.PIXELS_PER_UNIT));
