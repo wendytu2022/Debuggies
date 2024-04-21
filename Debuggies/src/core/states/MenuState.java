@@ -25,6 +25,7 @@ public class MenuState extends BasicGameState {
 	
 	private int id; //MenuState ID
 	private Input user_input; //User input
+	public static boolean h;
 	
 	
 	public MenuState(int id) {
@@ -58,8 +59,11 @@ public class MenuState extends BasicGameState {
 			.setWidth(Config.SCREEN_WIDTH * 0.25f)
 			.setHeight(Config.SCREEN_HEIGHT * 0.25f)
 			.initialize();	
+		
+		h = false;
 	}
 
+	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.setBackground(new Color(1.0f,1.0f,1.0f)); // background VSCode color
@@ -70,6 +74,11 @@ public class MenuState extends BasicGameState {
 		
 		start.draw(g);
 		end.draw(g);
+		
+		if (user_input.isKeyDown(Input.KEY_H)){
+			Image help = ImageManager.getImage("manual.png");
+			g.drawImage(help.getScaledCopy(Config.SCREEN_WIDTH + 5, Config.SCREEN_HEIGHT + 5), 0, 0);
+		}
 	}
 
 	@Override

@@ -582,6 +582,7 @@ public class ExampleState extends BasicGameState {
 		}
 		if (!aiming && user_input.isKeyPressed(Input.KEY_ESCAPE)) {
 			 sbg.getState(0).init(gc, sbg);
+			 MenuState.h = false;
 	         sbg.enterState(1);
 			 green = 0;
 			 yellow = 0;
