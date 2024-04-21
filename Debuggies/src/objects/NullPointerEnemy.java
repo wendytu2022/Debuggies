@@ -34,6 +34,12 @@ public class NullPointerEnemy extends Enemy {
 	}
 
 	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.red += 1;
+	}
+	
+	@Override
 	public void update(float deltaTime) {
 		Entity player = ExampleState.player;
 

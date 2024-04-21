@@ -33,6 +33,12 @@ public class StackOverflowEnemy extends Enemy {
 		timeBetweenShots = ShotDelay;
 	}
 	
+	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.red += 1;
+	}
+	
 	// shoot a booty ton of bullets
 	@Override
 	public void update(float deltaTime) {

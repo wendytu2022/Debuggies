@@ -30,6 +30,12 @@ public class SyntaxErrorEnemy extends Enemy {
 	}
 	
 	@Override
+	public void remove() {
+		super.remove();
+		ExampleState.green += 1;
+	}
+	
+	@Override
 	public void update(float deltaTime) {
 		Entity player = ExampleState.player;
 		

@@ -63,7 +63,7 @@ public class Statistics extends Box{
 				((int) ((0.6f)*Config.SCREEN_HEIGHT)));
 		font.drawString(((int) ((0.423f)*Config.SCREEN_WIDTH)), (int) ((0.25f)*Config.SCREEN_HEIGHT), "Work Report: ", Color.red);
 		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), "Time Survived: ", Color.red);
-		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), time+"", Color.red);
+		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.35f)*Config.SCREEN_HEIGHT), ExampleState.time +"", Color.red);
 		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.42f)*Config.SCREEN_HEIGHT), "Green Killed: ", Color.red);
 		font.drawString(((int) ((0.63f)*Config.SCREEN_WIDTH)), (int) ((0.42f)*Config.SCREEN_HEIGHT), green+"", Color.red);
 		font.drawString(((int) ((0.33f)*Config.SCREEN_WIDTH)), (int) ((0.49f)*Config.SCREEN_HEIGHT), "Yellow Killed: ", Color.red);

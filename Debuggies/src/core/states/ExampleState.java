@@ -82,10 +82,10 @@ public class ExampleState extends BasicGameState {
 	
 	private Input user_input;
 	
-	public int time;
-	public int green;
-	public int yellow;
-	public int red;
+	public static int time;
+	public static int green;
+	public static int yellow;
+	public static int red;
 	
 	// Constructor
 	public ExampleState(int id) { 
@@ -113,6 +113,11 @@ public class ExampleState extends BasicGameState {
 		
 		paused = false;
 		alt = false;
+		
+		int time = 0;
+		int green = 0;
+		int yellow = 0;
+		int red = 0;
 		
 		breakpointTimer = BreakpointRespawn;
 		
@@ -515,6 +520,8 @@ public class ExampleState extends BasicGameState {
 	            }
             }
 		} else {
+			time += 1 / 60.f;
+			
 			// Check to create breakpoint
 			breakpointTimer -= 1 / 60.f;
 			
