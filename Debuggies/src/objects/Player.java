@@ -27,6 +27,9 @@ public class Player extends Entity {
 		
 		// Preload all the images
 		ImageManager.getImage("duggieonline.png");
+		
+		ImageManager.getImage("duggiejump.png");
+		
 		ImageManager.getImage("duggieleft.png");
 		ImageManager.getImage("duggiefront.png");
 		ImageManager.getImage("duggieright.png");

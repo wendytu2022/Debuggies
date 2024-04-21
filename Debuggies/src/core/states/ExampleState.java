@@ -32,6 +32,7 @@ import objects.UninitializedVariableEnemy;
 import objects.Player;
 import objects.Enemy;
 import objects.Breakpoint;
+import objects.CoffeeHeal;
 import objects.ConcurrentModificationEnemy;
 import objects.Entity;
 import objects.Entity.Team;
@@ -70,12 +71,13 @@ public class ExampleState extends BasicGameState {
 	private Enemy targetEntity; // Object we're focused on
 	private int targetIndex;    // Tracks index in the objects array to find our next target
 	
-	// Grid
-	private Image grid;
-	
 	// Timer for Breakpoint Orbs
 	private static final float BreakpointRespawn = 7.5f;
 	private float breakpointTimer;
+	
+	// Timer for CofeeHeal Orbs
+	private static final float HealRespawn = 10f;
+	private float healTimer;
 	
 	private float targetAnimate;
 	
@@ -108,6 +110,7 @@ public class ExampleState extends BasicGameState {
 		alt = false;
 		
 		breakpointTimer = BreakpointRespawn;
+		healTimer = HealRespawn;
 		
 		// Create Objects Array
 		objects = new ArrayList<>();
@@ -335,7 +338,7 @@ public class ExampleState extends BasicGameState {
 		 if (paused || aiming)
 			 return;
 		
-		 if (!player.removalMarked() ) {
+		 if (!player.removalMarked()) {
 			// Otherwise, shoot a bullet from the player 
 			 Vector spawn = GraphicsManager.ScreenToWorld(new Vector(x, y));
 			 
@@ -508,6 +511,19 @@ public class ExampleState extends BasicGameState {
 				
 				Breakpoint b = new Breakpoint();
 				b.getPosition().assign(player.getPosition().offset(randomX, randomY));			
+			}
+			
+			healTimer -= 1 / 60.f;
+			
+			if (healTimer < 0) {
+				healTimer = HealRespawn;
+				
+				float radians = (float) (Math.random() * 2 * Math.PI);
+				float randomX = 25.f * (float) Math.cos(radians);
+				float randomY = 25.f * (float) Math.sin(radians);
+				
+				CoffeeHeal c = new CoffeeHeal();
+				c.getPosition().assign(player.getPosition().offset(randomX, randomY));
 			}
 			
 			// Handle Movement Input (CANNOT MOVE ON AIM)
